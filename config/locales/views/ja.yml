@@ -1,1 +1,7 @@
 ja:
+  defaults:
+    register: '登録'
+  users:
+    create:
+      success: 'ユーザー登録が完了しました'
+      fail: 'ユーザー登録が失敗しました'
