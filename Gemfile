@@ -72,6 +72,8 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "webdrivers"
+  gem "rspec-rails"
+  gem "factory_bot_rails"
 end
 
 gem "dockerfile-rails", ">= 1.5", :group => :development
@@ -81,3 +83,7 @@ gem "pg", "~> 1.5"
 gem "sentry-ruby", "~> 5.10"
 
 gem "sentry-rails", "~> 5.10"
+# ログイン機能のため
+gem "sorcery"
+# 日本語化のため
+gem "rails-i18n"

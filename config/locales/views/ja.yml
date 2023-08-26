@@ -1,0 +1,9 @@
+ja:
+  defaults:
+    register: '登録'
+  users:
+    new:
+      title: '新規登録'
+    create:
+      success: 'ユーザー登録が完了しました'
+      fail: 'ユーザー登録が失敗しました'
