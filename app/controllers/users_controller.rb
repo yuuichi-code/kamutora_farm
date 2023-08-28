@@ -1,10 +1,11 @@
 class UsersController < ApplicationController
-  def show
-  end
+  def show; end
 
   def new
     @user = User.new
   end
+
+  def edit; end
 
   def create
     @user = User.new(user_params)
@@ -14,9 +15,6 @@ class UsersController < ApplicationController
       flash.now[:danger] = t('.fail')
       render :new, status: :unprocessable_entity
     end
-  end
-
-  def edit
   end
 
   private
