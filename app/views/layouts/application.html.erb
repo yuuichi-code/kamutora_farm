@@ -12,7 +12,8 @@
   </head>
 
   <body>
-    <main class="h-screen w-screen flex justify-center items-center">
+    <main>
+      <%= render 'shared/header' %>
       <%= render 'shared/flash_message' %>
       <%= yield %>
     </main>
