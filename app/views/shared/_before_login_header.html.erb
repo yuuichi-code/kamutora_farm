@@ -9,8 +9,8 @@
         <% end %>
       </div>
       <div>
-        <%= link_to logout_path, data: { turbo_method: :delete }, class: 'flex flex-col items-center' do %>
-          <li class="text-white"><%= t 'defaults.logout' %></li>
+        <%= link_to login_path, class: 'flex flex-col items-center' do %>
+          <li class="text-white"><%= t 'defaults.login' %></li>
           <i class="fa-solid fa-right-to-bracket" style="color: #ffffff;"></i>
         <% end %>
       </div>
