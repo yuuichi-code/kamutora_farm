@@ -6,6 +6,7 @@ ja:
     logout: 'ログアウト'
     title: 'カムライトライブ'
     sub_title: '神花の園'
+    need_login: 'ログインをしてください'
   users:
     new:
       title: '新規登録'
