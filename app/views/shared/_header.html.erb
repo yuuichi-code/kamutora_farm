@@ -9,6 +9,24 @@
         <% end %>
       </div>
       <div>
+        <%= link_to '#', class: 'flex flex-col items-center' do %>
+          <li class="text-white"><%= t 'defaults.new_post' %></li>
+          <i class="fa-solid fa-pen-to-square" style="color: #ffffff;"></i>
+        <% end %>
+      </div>
+      <div>
+        <%= link_to '#', class: 'flex flex-col items-center' do %>
+          <li class="text-white"><%= t 'defaults.notice' %></li>
+          <i class="fa-solid fa-bell" style="color: #ffffff;"></i>
+        <% end %>
+      </div>
+      <div>
+        <%= link_to '#', class: 'flex flex-col items-center' do %>
+          <li class="text-white"><%= t 'defaults.my_page' %></li>
+          <i class="fa-solid fa-user" style="color: #ffffff;"></i>
+        <% end %>
+      </div>
+      <div>
         <%= link_to logout_path, data: { turbo_method: :delete }, class: 'flex flex-col items-center' do %>
           <li class="text-white"><%= t 'defaults.logout' %></li>
           <i class="fa-solid fa-right-to-bracket" style="color: #ffffff;"></i>

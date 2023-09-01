@@ -2,6 +2,9 @@ ja:
   defaults:
     register: '登録'
     search: '検索'
+    new_post: '新規投稿'
+    my_page: 'マイページ'
+    notice: '通知'
     login: 'ログイン'
     logout: 'ログアウト'
     title: 'カムライトライブ'
