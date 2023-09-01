@@ -14,6 +14,7 @@ RSpec.describe "Users", type: :system do
         click_button I18n.t('defaults.register')
         expect(page).to have_content I18n.t('users.create.success')
         expect(current_path).to eq root_path
+        expect(page).to have_content I18n.t('defaults.logout')
       end
     end
 
