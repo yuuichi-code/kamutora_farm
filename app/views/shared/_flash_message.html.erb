@@ -1,0 +1,13 @@
+<div class="text-center">
+  <% flash.each do |message_type, message| %>
+    <% if message_type == 'notice' %>
+      <div class="bg-green-100">
+        <%= message %>
+      </div>
+    <% else %>
+      <div class="bg-red-100">
+        <%= message %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

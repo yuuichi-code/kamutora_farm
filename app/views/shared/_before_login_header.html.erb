@@ -1,0 +1,19 @@
+<header class="bg-header-image bg-cover h-48">
+  <%= render 'shared/header_logo' %>
+  <div>
+    <ul class="flex flex-row justify-end">
+      <div>
+        <%= link_to '#', class: 'flex flex-col items-center' do %>
+          <li class="text-white"><%= t 'defaults.search' %></li>
+          <i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i>
+        <% end %>
+      </div>
+      <div>
+        <%= link_to login_path, class: 'flex flex-col items-center' do %>
+          <li class="text-white"><%= t 'defaults.login' %></li>
+          <i class="fa-solid fa-right-to-bracket" style="color: #ffffff;"></i>
+        <% end %>
+      </div>
+    </ul>
+  </div>
+</header>
