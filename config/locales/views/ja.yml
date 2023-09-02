@@ -2,12 +2,29 @@ ja:
   defaults:
     register: '登録'
     search: '検索'
+    new_post: '新規投稿'
+    my_page: 'マイページ'
+    notice: '通知'
     login: 'ログイン'
+    logout: 'ログアウト'
     title: 'カムライトライブ'
     sub_title: '神花の園'
+    need_login: 'ログインをしてください'
   users:
     new:
       title: '新規登録'
+      have_account: 'アカウントがある方は'
+      to_here: 'こちら'
     create:
       success: 'ユーザー登録が完了しました'
       fail: 'ユーザー登録が失敗しました'
+  user_sessions:
+    new:
+      not_account: 'アカウントがない方は'
+      not_password: 'パスワードを忘れた方は'
+      to_here: 'こちら'
+    create:
+      success: 'ログインしました'
+      fail: 'ログインに失敗しました'
+    destroy:
+      success: 'ログアウトしました'
