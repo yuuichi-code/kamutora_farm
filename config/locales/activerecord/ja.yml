@@ -2,9 +2,18 @@ ja:
   activerecord:
     models:
       user: 'ユーザー'
+      post: '投稿'
+      character: 'キャラクター'
+      support_character: '修行仲間'
     attributes:
       user:
         name: '名前'
         email: 'メールアドレス'
         password: 'パスワード'
         password_confirmation: 'パスワード再入力'
+      post:
+        title: 'タイトル'
+      character:
+        name: '名前'
+        unit_element: '属性'
+        initial_rarity: '初期レアリティ'
