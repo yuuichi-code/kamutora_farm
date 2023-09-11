@@ -10,6 +10,8 @@ ja:
     title: 'カムライトライブ'
     sub_title: '神花の園'
     need_login: 'ログインをしてください'
+    # 修行仲間の選択が重複していたときにメッセージを入れるため
+    uniq: 'が重複してます'
   users:
     new:
       title: '新規登録'
@@ -28,3 +30,6 @@ ja:
       fail: 'ログインに失敗しました'
     destroy:
       success: 'ログアウトしました'
+  posts:
+    create_step1:
+      fail: '入力し直してください'

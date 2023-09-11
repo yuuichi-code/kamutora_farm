@@ -1,1 +1,20 @@
-<p>test</p>
+<%= form_with model: @post, url: create_step1_path, local: true do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+  <div class="mb-4">
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </div>
+  <div class="mb-4">
+    <%= f.label :first %>
+    <%= f.collection_select :post_character_ids, Character.all, :id, :name, {}, {name: 'post[post_character_ids][]'} %>
+  </div>
+  <div class="mb-4">
+    <%= f.label :second %>
+    <%= f.collection_select :post_character_ids, Character.all, :id, :name, {}, {name: 'post[post_character_ids][]'} %>
+  </div>
+  <div class="mb-4">
+    <%= f.label :third %>
+    <%= f.collection_select :post_character_ids, Character.all, :id, :name, {}, {name: 'post[post_character_ids][]'} %>
+  </div>
+  <%= f.submit %>
+<% end %>

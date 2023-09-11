@@ -13,6 +13,8 @@ ja:
         password_confirmation: 'パスワード再入力'
       post:
         title: 'タイトル'
+        # 修行仲間の選択が重複していた時のエラーメッセージのために入れている
+        support_character: '修行仲間'
       character:
         name: '名前'
         unit_element: '属性'
