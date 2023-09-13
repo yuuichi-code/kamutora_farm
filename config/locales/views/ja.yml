@@ -31,5 +31,8 @@ ja:
     destroy:
       success: 'ログアウトしました'
   posts:
+    step1:
+      choice: '修行仲間選択'
+      next_step: '次へ'
     create_step1:
       fail: '入力し直してください'
