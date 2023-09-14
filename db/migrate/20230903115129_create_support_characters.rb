@@ -6,5 +6,6 @@ class CreateSupportCharacters < ActiveRecord::Migration[7.0]
 
       t.timestamps
     end
+    add_index :support_characters, [:post_id, :character_id], unique: true
   end
 end

@@ -35,5 +35,4 @@ class PostsController < ApplicationController
   def support_character_params
     params.require(:post).permit(post_character_ids: [])
   end
-
 end

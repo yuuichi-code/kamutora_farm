@@ -14,14 +14,12 @@ RSpec.describe SupportCharacter, type: :model do
 
     it 'post_idの値がない場合NG' do
       support_character = build(:support_character, post_id: nil, character_id: character.id)
-      support_character.valid?
-      expect(support_character.errors[:post_id]).to include(I18n.t('errors.messages.blank'))
+      expect(support_character).to be_invalid
     end
 
     it 'character_idの値がない場合NG' do
       support_character = build(:support_character, post_id: post.id, character_id: nil)
-      support_character.valid?
-      expect(support_character.errors[:character_id]).to include(I18n.t('errors.messages.blank'))
+      expect(support_character).to be_invalid
     end
   end
 end

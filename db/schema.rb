@@ -17,6 +17,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_03_115129) do
     t.integer "initial_rarity", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_characters_on_name", unique: true
   end
 
   create_table "posts", force: :cascade do |t|
@@ -33,6 +34,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_03_115129) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["character_id"], name: "index_support_characters_on_character_id"
+    t.index ["post_id", "character_id"], name: "index_support_characters_on_post_id_and_character_id", unique: true
     t.index ["post_id"], name: "index_support_characters_on_post_id"
   end
 
