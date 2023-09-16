@@ -10,7 +10,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_21_153829) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_03_115129) do
+  create_table "characters", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "unit_element", null: false
+    t.integer "initial_rarity", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_characters_on_name", unique: true
+  end
+
+  create_table "posts", force: :cascade do |t|
+    t.string "title", null: false
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_posts_on_user_id"
+  end
+
+  create_table "support_characters", force: :cascade do |t|
+    t.integer "post_id", null: false
+    t.integer "character_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["character_id"], name: "index_support_characters_on_character_id"
+    t.index ["post_id", "character_id"], name: "index_support_characters_on_post_id_and_character_id", unique: true
+    t.index ["post_id"], name: "index_support_characters_on_post_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name", null: false
     t.string "email", null: false
@@ -21,4 +48,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_21_153829) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "posts", "users"
+  add_foreign_key "support_characters", "characters"
+  add_foreign_key "support_characters", "posts"
 end

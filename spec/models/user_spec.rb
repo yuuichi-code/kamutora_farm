@@ -7,20 +7,23 @@ RSpec.describe User, type: :model do
       expect(user).to be_valid
       expect(user.errors).to be_empty
     end
+
     it 'nameの値がない場合NG' do
       user = build(:user, name: nil)
       user.valid?
-      expect(user.errors[:name]).to eq I18n.t('errors.messages.blank')
+      expect(user.errors[:name]).to include(I18n.t('errors.messages.blank'))
     end
+
     it 'emailの値がない場合NG' do
       user = build(:user, email: nil)
       user.valid?
-      expect(user.errors[:email]).to eq I18n.t('errors.messages.blank')
+      expect(user.errors[:email]).to include(I18n.t('errors.messages.blank'))
     end
+
     it 'passwordの値が5文字以下の場合NG' do
-      user = build(:user, password: 'passw')
+      user = build(:user, password: 'a' * 5)
       user.valid?
-      expect(user.errors[:password]).to eq I18n.t('errors.messages.blank')
+      expect(user.errors[:password]).to include(I18n.t('errors.messages.too_short', count: 6))
     end
   end
 end
