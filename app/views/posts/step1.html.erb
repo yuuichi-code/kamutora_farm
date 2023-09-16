@@ -8,7 +8,7 @@
     <div class="flex justify-center">
       <% 3.times do %>
         <div class="flex">
-          <%= f.collection_select :post_character_ids, Character.all, :id, :name, { prompt: t('.choice') }, { name: 'post[post_character_ids][]' } %>
+          <%= f.collection_select :character_ids, Character.all, :id, :name, { prompt: t('.choice') }, { name: 'post[post_character_ids][]' } %>
         </div>
       <% end %>
     </div>
