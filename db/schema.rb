@@ -10,7 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_03_115129) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_22_131349) do
+  create_table "chapter_turns", force: :cascade do |t|
+    t.integer "chapter_id", null: false
+    t.integer "turn_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chapter_id", "turn_id"], name: "index_chapter_turns_on_chapter_id_and_turn_id", unique: true
+    t.index ["chapter_id"], name: "index_chapter_turns_on_chapter_id"
+    t.index ["turn_id"], name: "index_chapter_turns_on_turn_id"
+  end
+
+  create_table "chapters", force: :cascade do |t|
+    t.integer "chapter_number", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "characters", force: :cascade do |t|
     t.string "name", null: false
     t.integer "unit_element", null: false
@@ -38,6 +54,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_03_115129) do
     t.index ["post_id"], name: "index_support_characters_on_post_id"
   end
 
+  create_table "turns", force: :cascade do |t|
+    t.integer "turn_number", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name", null: false
     t.string "email", null: false
@@ -48,6 +70,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_03_115129) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "chapter_turns", "chapters"
+  add_foreign_key "chapter_turns", "turns"
   add_foreign_key "posts", "users"
   add_foreign_key "support_characters", "characters"
   add_foreign_key "support_characters", "posts"
