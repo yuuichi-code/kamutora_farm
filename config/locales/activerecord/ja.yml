@@ -5,6 +5,8 @@ ja:
       post: '投稿'
       character: 'キャラクター'
       support_character: '修行仲間'
+      chapter: 'チャプター'
+      turn: 'ターン'
     attributes:
       user:
         name: '名前'
@@ -19,3 +21,7 @@ ja:
         name: '名前'
         unit_element: '属性'
         initial_rarity: '初期レアリティ'
+      chapter:
+        chapter_number: 'チャプター数'
+      turn:
+        turn_number: 'ターン数'

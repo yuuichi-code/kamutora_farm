@@ -25,6 +25,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_22_131349) do
     t.integer "chapter_number", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["chapter_number"], name: "index_chapters_on_chapter_number", unique: true
   end
 
   create_table "characters", force: :cascade do |t|
@@ -58,6 +59,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_22_131349) do
     t.integer "turn_number", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["turn_number"], name: "index_turns_on_turn_number", unique: true
   end
 
   create_table "users", force: :cascade do |t|

@@ -5,5 +5,6 @@ class CreateTurns < ActiveRecord::Migration[7.0]
 
       t.timestamps
     end
+    add_index :turns, :turn_number, unique: true
   end
 end
