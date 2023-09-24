@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_22_131349) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_24_100917) do
+  create_table "actions", force: :cascade do |t|
+    t.string "content", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["content"], name: "index_actions_on_content", unique: true
+  end
+
   create_table "chapter_turns", force: :cascade do |t|
     t.integer "chapter_id", null: false
     t.integer "turn_id", null: false
@@ -35,6 +42,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_22_131349) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_characters_on_name", unique: true
+  end
+
+  create_table "flower_seeds", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_flower_seeds_on_name", unique: true
   end
 
   create_table "posts", force: :cascade do |t|

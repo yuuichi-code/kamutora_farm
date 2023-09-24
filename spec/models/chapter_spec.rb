@@ -16,9 +16,9 @@ RSpec.describe Chapter, type: :model do
 
     it 'chapter_numberの値が一意でない場合はNG' do
       chapter = create(:chapter)
-      chapter_compare = build(:chapter, chapter_number: chapter.chapter_number)
-      chapter_compare.valid?
-      expect(chapter_compare.errors[:chapter_number]).to include(I18n.t('errors.messages.taken'))
+      duplicate_chapter = build(:chapter, chapter_number: chapter.chapter_number)
+      duplicate_chapter.valid?
+      expect(duplicate_chapter.errors[:chapter_number]).to include(I18n.t('errors.messages.taken'))
     end
   end
 end
