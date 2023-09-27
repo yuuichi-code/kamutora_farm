@@ -6,5 +6,7 @@ Rails.application.routes.draw do
   delete 'logout' => 'user_sessions#destroy'
   get 'step1' => 'posts#step1'
   post 'create_step1' => 'posts#create_step1'
+  get 'step2' => 'posts#step2'
+  post 'create_step2' => 'posts#create_step2'
   resources :posts, only: %i[create]
 end

@@ -6,6 +6,6 @@ class Post < ApplicationRecord
   validates :title, presence: true
 
   def validate_support_character_uniqueness(character_ids)
-    character_ids.uniq.length != character_ids.length if errors.add(:support_character, I18n.t('defaults.uniq'))
+    errors.add(:support_character, I18n.t('defaults.uniq')) if character_ids.uniq.length != character_ids.length
   end
 end

@@ -1,0 +1,9 @@
+<table class="border-separate table-auto border">
+  <% selected_support_characters.each_slice(3) do |row| %>
+    <tr class="border">
+      <% row.each do |character| %>
+        <td class="border"><%= character.name %></td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>

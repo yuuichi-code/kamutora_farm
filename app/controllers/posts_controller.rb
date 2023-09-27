@@ -19,12 +19,20 @@ class PostsController < ApplicationController
     if @post.errors.empty?
       session[:post_title] = post_params[:title]
       session[:character_ids] = support_character_params[:post_character_ids]
-      redirect_to root_path
+      redirect_to step2_path
     else
       flash.now[:alert] = t('.fail')
       render :step1, status: :unprocessable_entity
     end
   end
+
+  def step2
+    @post = Post.new
+    session[:character_ids]
+    @selected_support_characters = Character.find(session[:character_ids])
+  end
+
+  def create_step2; end
 
   private
 
