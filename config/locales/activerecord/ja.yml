@@ -25,3 +25,13 @@ ja:
         chapter_number: 'チャプター数'
       turn:
         turn_number: 'ターン数'
+  activemodel:
+    attributes:
+      post_form_step1:
+        title: 'タイトル'
+        first_character: '1人目'
+        second_character: '2人目'
+        third_character: '3人目'
+        fourth_character: '4人目'
+        fifth_character: '5人目'
+        sixth_character: '6人目'

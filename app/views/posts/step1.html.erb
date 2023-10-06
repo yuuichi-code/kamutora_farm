@@ -1,18 +1,24 @@
-<%= form_with model: @post, url: create_step1_path, local: true do |f| %>
+<%= form_with model: @post_form_step1, url: create_step1_path, local: true do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
   <div class="my-10 sm:mx-auto sm:w-full sm:max-w-sm">
     <%= f.label :title, class: 'block text-gray-700 text-sm font-bold mb-2' %>
     <%= f.text_field :title, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' %>
   </div>
-  <% 2.times do %>
-    <div class="flex justify-center">
-      <% 3.times do %>
-        <div class="flex">
-          <%= f.collection_select :character_ids, Character.all, :id, :name, { prompt: t('.choice') }, { name: 'post[post_character_ids][]' } %>
-        </div>
-      <% end %>
+  <div class="flex justify-center">
+    <div class="flex">
+      <%= f.collection_select :first_character, @characters, :id, :name, { prompt: t('.choice') } %>
+      <%= f.collection_select :second_character, @characters, :id, :name, { prompt: t('.choice') } %>
+      <%= f.collection_select :third_character, @characters, :id, :name, { prompt: t('.choice') } %>
     </div>
-  <% end %>
+  </div>
+  <div class="flex justify-center">
+    <div class="flex">
+      <%= f.collection_select :fourth_character, @characters, :id, :name, { prompt: t('.choice') } %>
+      <%= f.collection_select :fifth_character, @characters, :id, :name, { prompt: t('.choice') } %>
+      <%= f.collection_select :sixth_character, @characters, :id, :name, { prompt: t('.choice') } %>
+    </div>
+  </div>
+
   <div class="flex justify-center mt-8 ml-48">
     <%= f.submit (t '.next_step'), class: 'rounded-lg border border-gray-300 bg-white px-5 py-2.5 text-center text-sm font-medium text-gray-700 shadow-sm transition-all hover:bg-gray-100 focus:ring focus:ring-gray-100 disabled:cursor-not-allowed disabled:border-gray-100 disabled:bg-gray-50 disabled:text-gray-400' %>
   </div>

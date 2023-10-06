@@ -10,8 +10,7 @@ ja:
     title: 'カムライトライブ'
     sub_title: '神花の園'
     need_login: 'ログインをしてください'
-    # 修行仲間の選択が重複していたときにメッセージを入れるため
-    uniq: 'が重複してます'
+    same_characters: '同一のキャラクターを選択しています'
   users:
     new:
       title: '新規登録'

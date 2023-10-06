@@ -6,19 +6,23 @@ class PostsController < ApplicationController
   def create; end
 
   def step1
-    @post = Post.new
+    @post_form_step1 = PostFormStep1.new
+    @characters = Character.all
   end
 
   def create_step1
-    @post = current_user.posts.build(post_params)
-    # エラーメッセージの上書きを回避するためにvalidate_support_character_uniquenessより先に記述している
-    @post.valid?
-    # サポートキャラクターが重複しているかをチェックして、重複していたらエラーメッセージを入れる
-    character_ids = support_character_params[:post_character_ids]
-    @post.validate_support_character_uniqueness(character_ids)
-    if @post.errors.empty?
-      session[:post_title] = post_params[:title]
-      session[:character_ids] = support_character_params[:post_character_ids]
+    @post_form_step1 = PostFormStep1.new(post_form_step1_params)
+    @characters = Character.all
+    if @post_form_step1.valid?
+      session[:post_title] = post_form_step1_params[:title]
+      session[:support_characters] = [
+        post_form_step1_params[:first_character],
+        post_form_step1_params[:second_character],
+        post_form_step1_params[:third_character],
+        post_form_step1_params[:fourth_character],
+        post_form_step1_params[:fifth_character],
+        post_form_step1_params[:sixth_character]
+      ]
       redirect_to step2_path
     else
       flash.now[:alert] = t('.fail')
@@ -28,19 +32,23 @@ class PostsController < ApplicationController
 
   def step2
     @post = Post.new
-    session[:character_ids]
-    @selected_support_characters = Character.find(session[:character_ids])
+    session[:support_characters]
+    @selected_support_characters = Character.find(session[:support_characters])
   end
 
   def create_step2; end
 
   private
 
-  def post_params
-    params.require(:post).permit(:title)
-  end
-
-  def support_character_params
-    params.require(:post).permit(post_character_ids: [])
+  def post_form_step1_params
+    params.require(:post_form_step1).permit(
+      :title,
+      :first_character,
+      :second_character,
+      :third_character,
+      :fourth_character,
+      :fifth_character,
+      :sixth_character
+    )
   end
 end
