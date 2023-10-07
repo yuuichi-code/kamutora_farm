@@ -10,7 +10,8 @@ ja:
     title: 'カムライトライブ'
     sub_title: '神花の園'
     need_login: 'ログインをしてください'
-    same_characters: '同一のキャラクターを選択しています'
+    same_training_characters: 'は修行仲間とは別のキャラクターを選択してください'
+    same_characters: '同一の修行仲間を選択しています'
   users:
     new:
       title: '新規登録'
@@ -31,7 +32,8 @@ ja:
       success: 'ログアウトしました'
   posts:
     step1:
-      choice: '修行仲間選択'
+      support_character_choice: '修行仲間選択'
+      training_character_choice: '育成キャラクター選択'
       next_step: '次へ'
     create_step1:
       fail: '入力し直してください'

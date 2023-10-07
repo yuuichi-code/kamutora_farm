@@ -29,6 +29,7 @@ ja:
     attributes:
       post_form_step1:
         title: 'タイトル'
+        training_character: '育成キャラクター'
         first_character: '1人目'
         second_character: '2人目'
         third_character: '3人目'
