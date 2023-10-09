@@ -24,7 +24,7 @@ class PostsController < ApplicationController
         @post_form_step1.fifth_character,
         @post_form_step1.sixth_character
       ]
-      redirect_to step2_path
+      redirect_to step2_path, notice: t('.to_first_chapter')
     else
       flash.now[:alert] = t('.fail')
       render :step1, status: :unprocessable_entity

@@ -28,6 +28,7 @@ class PostFormStep1
     ]
     errors.add(:base, I18n.t('defaults.same_characters')) if support_characters.uniq.length != support_characters.length
   end
+
   # 育成キャラクターの選択が修行仲間選択と重複しているかをチェック
   def validate_training_character_uniqueness
     support_characters = [
