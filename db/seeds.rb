@@ -13,6 +13,7 @@ Character.create!(name: 'イツキ', unit_element: 'wind', initial_rarity: 4)
 Character.create!(name: 'スイ', unit_element: 'earth', initial_rarity: 4)
 Character.create!(name: 'チバリ', unit_element: 'master', initial_rarity: 4)
 Character.create!(name: '[陽だまり]エニス', unit_element: 'master', initial_rarity: 4)
+Character.create!(name: 'キイチ', unit_element: 'master', initial_rarity: 4)
 
 # ターン数のデータ
 number_of_turns = 1..8

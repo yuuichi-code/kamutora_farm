@@ -1,8 +1,8 @@
-<table class="border-separate table-auto border">
+<table class="mt-6 flex justify-center table-auto">
   <% selected_support_characters.each_slice(3) do |row| %>
-    <tr class="border">
+    <tr class="border border-black">
       <% row.each do |character| %>
-        <td class="border"><%= character.name %></td>
+        <td class="border border-black"><%= character.name %></td>
       <% end %>
     </tr>
   <% end %>

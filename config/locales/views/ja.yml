@@ -12,6 +12,7 @@ ja:
     need_login: 'ログインをしてください'
     same_training_characters: 'は修行仲間とは別のキャラクターを選択してください'
     same_characters: '同一の修行仲間を選択しています'
+    now_chapter: 'の巻'
   users:
     new:
       title: '新規登録'

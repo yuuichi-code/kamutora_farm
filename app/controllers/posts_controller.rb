@@ -33,6 +33,7 @@ class PostsController < ApplicationController
 
   def step2
     @post = Post.new
+    @now_chapter = Chapter.first
     session[:support_characters]
     @selected_support_characters = Character.find(session[:support_characters])
   end
