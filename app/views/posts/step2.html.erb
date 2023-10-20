@@ -1,2 +1,37 @@
 <%= render 'selected_characters', selected_support_characters: @selected_support_characters %>
 <%= render 'now_chapter', now_chapter: @now_chapter %>
+<%= form_with model: @post_form_step2, url: create_step2_path, local: true do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+  <div class="mt-6 flex justify-center">
+    <table>
+      <thead>
+        <tr class="border border-black">
+          <%# 空欄のマスが必要なため空のthを追加 %>
+          <th></th>
+          <% @turns.each do |turn| %>
+            <th class="border border-black">
+              <%= turn.turn_number.to_s + t('defaults.day') %>
+            </th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody class="border border-black">
+        <tr>
+          <td class="border border-black">b</td>
+          <% days = [:first_day_action, :second_day_action, :third_day_action, :fourth_day_action, :fifth_day_action, :sixth_day_action, :seventh_day_action, :eighth_day_action] %>
+          <% days.each.with_index(1) do |day, index| %>
+            <td class="border border-black">
+              <div>
+                <%= f.collection_select "#{day}", @actions, :id, :content, { prompt: t('.action_choice') } %>
+              </div>
+              <div class="js-remarks-field<%= index %>">
+                <button type="button" class="js-add-form-btn<%= index %>"><%= t('.add_remark') %></button>
+              </div>
+            </td>
+          <% end %>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <%= f.submit %>
+<% end %>

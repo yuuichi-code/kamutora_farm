@@ -32,13 +32,52 @@ class PostsController < ApplicationController
   end
 
   def step2
-    @post = Post.new
+    @post_form_step2 = PostFormStep2.new
     @now_chapter = Chapter.first
-    session[:support_characters]
+    @turns = Turn.all
+    @actions = Action.all
     @selected_support_characters = Character.find(session[:support_characters])
   end
 
-  def create_step2; end
+  def create_step2
+    @post_form_step2 = PostFormStep2.new(post_form_step2_params)
+    @now_chapter = Chapter.first
+    @turns = Turn.all
+    @actions = Action.all
+    @selected_support_characters = Character.find(session[:support_characters])
+    if @post_form_step2.valid?
+      session[:chapter1_actions] = [
+        @post_form_step2.first_day_action,
+        @post_form_step2.second_day_action,
+        @post_form_step2.third_day_action,
+        @post_form_step2.fourth_day_action,
+        @post_form_step2.fifth_day_action,
+        @post_form_step2.sixth_day_action,
+        @post_form_step2.seventh_day_action,
+        @post_form_step2.eighth_day_action
+      ]
+      session[:chapter1_remarks] = [
+        @post_form_step2.first_day_remark,
+        @post_form_step2.second_day_remark,
+        @post_form_step2.third_day_remark,
+        @post_form_step2.fourth_day_remark,
+        @post_form_step2.fifth_day_remark,
+        @post_form_step2.sixth_day_remark,
+        @post_form_step2.seventh_day_remark,
+        @post_form_step2.eighth_day_remark
+      ]
+      redirect_to step3_path, notice: t('.to_second_chapter')
+    else
+      flash.now[:alert] = t('.fail')
+      render :step2, status: :unprocessable_entity
+    end
+  end
+
+  def step3
+    @selected_chapter1_remarks = session[:chapter1_remarks]
+  end
+
+  def create_step3; end
 
   private
 
@@ -52,6 +91,29 @@ class PostsController < ApplicationController
       :fourth_character,
       :fifth_character,
       :sixth_character
+    )
+  end
+
+  def post_form_step2_params
+    params.require(:post_form_step2).permit(
+      # 行動選択用
+      :first_day_action,
+      :second_day_action,
+      :third_day_action,
+      :fourth_day_action,
+      :fifth_day_action,
+      :sixth_day_action,
+      :seventh_day_action,
+      :eighth_day_action,
+      # 備考欄用
+      :first_day_remark,
+      :second_day_remark,
+      :third_day_remark,
+      :fourth_day_remark,
+      :fifth_day_remark,
+      :sixth_day_remark,
+      :seventh_day_remark,
+      :eighth_day_remark
     )
   end
 end

@@ -36,3 +36,12 @@ ja:
         fourth_character: '4人目'
         fifth_character: '5人目'
         sixth_character: '6人目'
+      post_form_step2:
+        first_day_action: '1日目の行動'
+        second_day_action: '2日目の行動'
+        third_day_action: '3日目の行動'
+        fourth_day_action: '4日目の行動'
+        fifth_day_action: '5日目の行動'
+        sixth_day_action: '6日目の行動'
+        seventh_day_action: '7日目の行動'
+        eighth_day_action: '8日目の行動'

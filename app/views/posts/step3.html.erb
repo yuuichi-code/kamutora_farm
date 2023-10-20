@@ -1,0 +1,7 @@
+<% session[:chapter1_actions].each do |action| %>
+  <p><%= Action.find(action).content %></p>
+<% end %>
+
+<% @selected_chapter1_remarks.each do |remark| %>
+  <p><%= remark %></p>
+<% end %>

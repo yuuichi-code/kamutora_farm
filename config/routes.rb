@@ -8,5 +8,7 @@ Rails.application.routes.draw do
   post 'create_step1' => 'posts#create_step1'
   get 'step2' => 'posts#step2'
   post 'create_step2' => 'posts#create_step2'
+  get 'step3' => 'posts#step3'
+  post 'create_step3' => 'posts#create_step3'
   resources :posts, only: %i[create]
 end
