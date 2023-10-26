@@ -1,0 +1,21 @@
+<%= form_with model: @post_form_step4, url: create_step4_path, local: true do |f| %>
+  <%= f.text_field :body, name: 'post_form_step4[body][]' %>
+  <%= f.text_field :body, name: 'post_form_step4[body][]' %>
+  <%= f.submit %>
+<% end %>
+
+<% max_farm_field = 9 %>
+<% farm_field = 1 %>
+
+<% now_farm_field.upto(max_farm_field) do |farm_field| %>
+  <% case farm_field %>
+    <% when 1 then %>
+      <p><%= farm_field %>1の時</p>
+    <% when 2 then %>
+      <p><%= farm_field %>2の時</p>
+    <% when 3 then %>
+      <p><%= farm_field %>3の時</p>
+    <% else %>
+      <p><%= farm_field %>その他</p>
+  <% end %>
+<% end %>
