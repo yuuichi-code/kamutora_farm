@@ -31,12 +31,10 @@
             </td>
           <% end %>
         </tr>
-        <% min_farm_field = 1 %>
-        <% max_farm_field = 9 %>
-        <% min_farm_field.upto(max_farm_field) do |farm_field| %>
+        <% @farm_places.first.farm_number.upto(@farm_places.last.farm_number) do |farm_field| %>
           <% case farm_field %>
             <%# 1の畑の場合 %>
-            <% when 1 then %>
+            <% when @farm_places.first.farm_number then %>
               <%# 種設置用 %>
               <tr>
                 <td rowspan="18" class="border border-black">畑</td>
@@ -61,7 +59,7 @@
                 <% end %>
               </tr>
             <%# 2の畑の場合 %>
-            <% when 2 then %>
+            <% when @farm_places.second.farm_number then %>
               <%# 種設置用 %>
               <tr>
                 <td class="border border-black">2の畑</td>
@@ -85,7 +83,7 @@
                 <% end %>
               </tr>
             <%# 3の畑の場合 %>
-            <% when 3 then %>
+            <% when @farm_places.third.farm_number then %>
               <%# 種設置用 %>
               <tr>
                 <td class="border border-black">3の畑</td>
@@ -113,7 +111,7 @@
                 <% end %>
               </tr>
             <%# 4の畑の場合 %>
-            <% when 4 then %>
+            <% when @farm_places.fourth.farm_number then %>
               <%# 種設置用 %>
               <tr>
                 <td class="border border-black">4の畑</td>
@@ -141,7 +139,7 @@
                 <% end %>
               </tr>
             <%# 5の畑の場合 %>
-            <% when 5 then %>
+            <% when @farm_places.fifth.farm_number then %>
               <%# 種設置用 %>
               <tr>
                 <td class="border border-black">5の畑</td>
@@ -166,13 +164,13 @@
             <% else %>
               <tr>
                 <td class="border border-black"><%= farm_field %>の畑</td>
-                <% 8.times do %>
+                <% @turns.count.times do %>
                   <td class="border border-black bg-slate-400"></td>
                 <% end %>
               </tr>
               <tr>
                 <td class="border border-black">キャラ</td>
-                <% 8.times do %>
+                <% @turns.count.times do %>
                   <td class="border border-black bg-slate-400"></td>
                 <% end %>
               </tr>

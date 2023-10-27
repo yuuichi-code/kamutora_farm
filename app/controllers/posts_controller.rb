@@ -40,6 +40,7 @@ class PostsController < ApplicationController
     @actions = Action.all
     @flower_seeds = FlowerSeed.all
     @selected_support_characters = Character.find(session[:support_characters])
+    @farm_places = FarmPlace.all
   end
 
   def create_step2

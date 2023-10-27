@@ -36,6 +36,12 @@ number_of_chapters.each do |chapter_id|
   end
 end
 
+# 畑の番号のデータ
+number_of_farms = 1..9
+number_of_farms.each do |number|
+  farm = FarmPlace.create!(farm_number: number)
+end
+
 # 花の種のデータ
 FlowerSeed.create!(name: 'ミツボシバナ')
 FlowerSeed.create!(name: 'ヒメサクラ')
