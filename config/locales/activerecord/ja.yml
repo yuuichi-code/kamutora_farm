@@ -7,6 +7,7 @@ ja:
       support_character: '修行仲間'
       chapter: 'チャプター'
       turn: 'ターン'
+      farm_place: '畑'
     attributes:
       user:
         name: '名前'
@@ -25,6 +26,8 @@ ja:
         chapter_number: 'チャプター数'
       turn:
         turn_number: 'ターン数'
+      farm_place:
+        farm_number: '畑の番号'
   activemodel:
     attributes:
       post_form_step1:

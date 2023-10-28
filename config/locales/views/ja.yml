@@ -14,6 +14,8 @@ ja:
     same_characters: '同一の修行仲間を選択しています'
     now_chapter: 'の巻'
     day: '日目'
+    of_farm: 'の畑'
+    set_character: 'キャラ'
   users:
     new:
       title: '新規登録'

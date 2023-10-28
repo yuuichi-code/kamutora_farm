@@ -50,6 +50,7 @@ class PostsController < ApplicationController
     @actions = Action.all
     @flower_seeds = FlowerSeed.all
     @selected_support_characters = Character.find(session[:support_characters])
+    @farm_places = FarmPlace.all
     if @post_form_step2.valid?
       # チャプター1行動選択用
       session[:chapter1_actions] = [

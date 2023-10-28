@@ -31,14 +31,14 @@
             </td>
           <% end %>
         </tr>
-        <% @farm_places.first.farm_number.upto(@farm_places.last.farm_number) do |farm_field| %>
-          <% case farm_field %>
+        <% @farm_places.each do |farm_place| %>
+          <% case farm_place.farm_number %>
             <%# 1の畑の場合 %>
             <% when @farm_places.first.farm_number then %>
               <%# 種設置用 %>
               <tr>
-                <td rowspan="18" class="border border-black">畑</td>
-                <td class="border border-black">1の畑</td>
+                <td rowspan="18" class="border border-black"><%= FarmPlace.model_name.human %></td>
+                <td class="border border-black"><%= farm_place.farm_number.to_s + t('defaults.of_farm') %></td>
                 <td class="border border-black bg-slate-400"></td>
                 <% farm1_seeds = [:day2_farm1_seed, :day3_farm1_seed, :day4_farm1_seed, :day5_farm1_seed, :day6_farm1_seed, :day7_farm1_seed, :day8_farm1_seed] %>
                 <% farm1_seeds.each do |seed| %>
@@ -49,7 +49,7 @@
               </tr>
               <%# キャラクター設置用 %>
               <tr>
-                <td class="border border-black">キャラ</td>
+                <td class="border border-black"><%= t('defaults.set_character') %></td>
                 <td class="border border-black bg-slate-400"></td>
                 <% farm1_characters = [:day2_farm1_character, :day3_farm1_character, :day4_farm1_character, :day5_farm1_character, :day6_farm1_character, :day7_farm1_character, :day8_farm1_character] %>
                 <% farm1_characters.each do |character| %>
@@ -62,7 +62,7 @@
             <% when @farm_places.second.farm_number then %>
               <%# 種設置用 %>
               <tr>
-                <td class="border border-black">2の畑</td>
+                <td class="border border-black"><%= farm_place.farm_number.to_s + t('defaults.of_farm') %></td>
                 <td class="border border-black bg-slate-400"></td>
                 <% farm2_seeds = [:day2_farm2_seed, :day3_farm2_seed, :day4_farm2_seed, :day5_farm2_seed, :day6_farm2_seed, :day7_farm2_seed, :day8_farm2_seed] %>
                 <% farm2_seeds.each do |seed| %>
@@ -73,7 +73,7 @@
               </tr>
               <%# キャラクター設置用 %>
               <tr>
-                <td class="border border-black">キャラ</td>
+                <td class="border border-black"><%= t('defaults.set_character') %></td>
                 <td class="border border-black bg-slate-400"></td>
                 <% farm2_characters = [:day2_farm2_character, :day3_farm2_character, :day4_farm2_character, :day5_farm2_character, :day6_farm2_character, :day7_farm2_character, :day8_farm2_character] %>
                 <% farm2_characters.each do |character| %>
@@ -86,7 +86,7 @@
             <% when @farm_places.third.farm_number then %>
               <%# 種設置用 %>
               <tr>
-                <td class="border border-black">3の畑</td>
+                <td class="border border-black"><%= farm_place.farm_number.to_s + t('defaults.of_farm') %></td>
                 <% 5.times do %>
                   <td class="border border-black bg-slate-400"></td>
                 <% end %>
@@ -99,7 +99,7 @@
               </tr>
               <%# キャラクター設置用 %>
               <tr>
-                <td class="border border-black">キャラ</td>
+                <td class="border border-black"><%= t('defaults.set_character') %></td>
                 <% 5.times do %>
                   <td class="border border-black bg-slate-400"></td>
                 <% end %>
@@ -114,7 +114,7 @@
             <% when @farm_places.fourth.farm_number then %>
               <%# 種設置用 %>
               <tr>
-                <td class="border border-black">4の畑</td>
+                <td class="border border-black"><%= farm_place.farm_number.to_s + t('defaults.of_farm') %></td>
                 <% 6.times do %>
                   <td class="border border-black bg-slate-400"></td>
                 <% end %>
@@ -127,7 +127,7 @@
               </tr>
               <%# キャラクター設置用 %>
               <tr>
-                <td class="border border-black">キャラ</td>
+                <td class="border border-black"><%= t('defaults.set_character') %></td>
                 <% 6.times do %>
                   <td class="border border-black bg-slate-400"></td>
                 <% end %>
@@ -142,7 +142,7 @@
             <% when @farm_places.fifth.farm_number then %>
               <%# 種設置用 %>
               <tr>
-                <td class="border border-black">5の畑</td>
+                <td class="border border-black"><%= farm_place.farm_number.to_s + t('defaults.of_farm') %></td>
                 <% 7.times do %>
                   <td class="border border-black bg-slate-400"></td>
                 <% end %>
@@ -152,7 +152,7 @@
               </tr>
               <%# キャラクター設置用 %>
               <tr>
-                <td class="border border-black">キャラ</td>
+                <td class="border border-black"><%= t('defaults.set_character') %></td>
                 <% 7.times do %>
                   <td class="border border-black bg-slate-400"></td>
                 <% end %>
@@ -163,13 +163,13 @@
             <%# 6~9の畑の場合 %>
             <% else %>
               <tr>
-                <td class="border border-black"><%= farm_field %>の畑</td>
+                <td class="border border-black"><%= farm_place.farm_number.to_s + t('defaults.of_farm') %></td>
                 <% @turns.count.times do %>
                   <td class="border border-black bg-slate-400"></td>
                 <% end %>
               </tr>
               <tr>
-                <td class="border border-black">キャラ</td>
+                <td class="border border-black"><%= t('defaults.set_character') %></td>
                 <% @turns.count.times do %>
                   <td class="border border-black bg-slate-400"></td>
                 <% end %>
