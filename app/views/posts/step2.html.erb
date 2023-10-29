@@ -84,10 +84,11 @@
               </tr>
             <%# 3の畑の場合 %>
             <% when @farm_places.third.farm_number then %>
+              <% not_selected_td = 5 %>
               <%# 種設置用 %>
               <tr>
                 <td class="border border-black"><%= farm_place.farm_number.to_s + t('defaults.of_farm') %></td>
-                <% 5.times do %>
+                <% not_selected_td.times do %>
                   <td class="border border-black bg-slate-400"></td>
                 <% end %>
                 <% farm3_seeds = [:day6_farm3_seed, :day7_farm3_seed, :day8_farm3_seed] %>
@@ -100,7 +101,7 @@
               <%# キャラクター設置用 %>
               <tr>
                 <td class="border border-black"><%= t('defaults.set_character') %></td>
-                <% 5.times do %>
+                <% not_selected_td.times do %>
                   <td class="border border-black bg-slate-400"></td>
                 <% end %>
                 <% farm3_characters = [:day6_farm3_character, :day7_farm3_character, :day8_farm3_character] %>
@@ -112,10 +113,11 @@
               </tr>
             <%# 4の畑の場合 %>
             <% when @farm_places.fourth.farm_number then %>
+              <% not_selected_td = 6 %>
               <%# 種設置用 %>
               <tr>
                 <td class="border border-black"><%= farm_place.farm_number.to_s + t('defaults.of_farm') %></td>
-                <% 6.times do %>
+                <% not_selected_td.times do %>
                   <td class="border border-black bg-slate-400"></td>
                 <% end %>
                 <% farm4_seeds = [:day7_farm4_seed, :day8_farm4_seed] %>
@@ -128,7 +130,7 @@
               <%# キャラクター設置用 %>
               <tr>
                 <td class="border border-black"><%= t('defaults.set_character') %></td>
-                <% 6.times do %>
+                <% not_selected_td.times do %>
                   <td class="border border-black bg-slate-400"></td>
                 <% end %>
                 <% farm4_characters = [:day7_farm4_character, :day8_farm4_character] %>
@@ -140,10 +142,11 @@
               </tr>
             <%# 5の畑の場合 %>
             <% when @farm_places.fifth.farm_number then %>
+              <% not_selected_td = 7 %>
               <%# 種設置用 %>
               <tr>
                 <td class="border border-black"><%= farm_place.farm_number.to_s + t('defaults.of_farm') %></td>
-                <% 7.times do %>
+                <% not_selected_td.times do %>
                   <td class="border border-black bg-slate-400"></td>
                 <% end %>
                 <td class="border border-black">
@@ -153,7 +156,7 @@
               <%# キャラクター設置用 %>
               <tr>
                 <td class="border border-black"><%= t('defaults.set_character') %></td>
-                <% 7.times do %>
+                <% not_selected_td.times do %>
                   <td class="border border-black bg-slate-400"></td>
                 <% end %>
                 <td class="border border-black">
