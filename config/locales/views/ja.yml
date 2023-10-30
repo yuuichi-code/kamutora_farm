@@ -10,8 +10,12 @@ ja:
     title: 'カムライトライブ'
     sub_title: '神花の園'
     need_login: 'ログインをしてください'
-    # 修行仲間の選択が重複していたときにメッセージを入れるため
-    uniq: 'が重複してます'
+    same_training_characters: 'は修行仲間とは別のキャラクターを選択してください'
+    same_characters: '同一の修行仲間を選択しています'
+    now_chapter: 'の巻'
+    day: '日目'
+    of_farm: 'の畑'
+    set_character: 'キャラ'
   users:
     new:
       title: '新規登録'
@@ -32,7 +36,19 @@ ja:
       success: 'ログアウトしました'
   posts:
     step1:
-      choice: '修行仲間選択'
+      support_character_choice: '修行仲間選択'
+      training_character_choice: '育成キャラクター選択'
       next_step: '次へ'
     create_step1:
+      to_first_chapter: '1の巻の内容を入力してください'
+      fail: '入力し直してください'
+    step2:
+      action_choice: '行動選択'
+      add_remark: '備考欄追加'
+      seed_choice: '種選択'
+      character_choice: 'キャラクター選択'
+      return_step: '戻る'
+      next_step: '次へ'
+    create_step2:
+      to_second_chapter: '2の巻の内容を入力してください'
       fail: '入力し直してください'

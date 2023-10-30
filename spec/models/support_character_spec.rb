@@ -5,7 +5,7 @@ RSpec.describe SupportCharacter, type: :model do
   let(:post) { create(:post) }
 
   describe 'バリデーション確認' do
-    it '重複した組み合わせの場合NG' do
+    it 'post_idとcharacter_idの組み合わせが重複した場合NG' do
       support_character1 = create(:support_character)
       duplicate_support_character = build(:support_character, post_id: support_character1.post_id, character_id: support_character1.character_id)
       duplicate_support_character.valid?

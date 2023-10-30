@@ -1,0 +1,189 @@
+<%= render 'selected_characters', selected_support_characters: @selected_support_characters %>
+<%= render 'now_chapter', now_chapter: @now_chapter %>
+<%= form_with model: @post_form_step2, url: create_step2_path, local: true do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+  <div class="mt-6 flex justify-center">
+    <table>
+      <thead>
+        <tr class="border border-black">
+          <%# 空欄のマスが必要なため空のthを追加 %>
+          <th colspan="2"></th>
+          <% @turns.each do |turn| %>
+            <th class="border border-black">
+              <%= turn.turn_number.to_s + t('defaults.day') %>
+            </th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody class="border border-black">
+        <tr>
+          <td colspan="2" class="border border-black"></td>
+          <%# 1日〜8日までの行動選択用 %>
+          <% days = [:first_day_action, :second_day_action, :third_day_action, :fourth_day_action, :fifth_day_action, :sixth_day_action, :seventh_day_action, :eighth_day_action] %>
+          <% days.each.with_index(1) do |day, index| %>
+            <td class="border border-black">
+              <div>
+                <%= f.collection_select "#{day}", @actions, :id, :content, { prompt: t('.action_choice') } %>
+              </div>
+              <div class="js-remarks-field<%= index %>">
+                <button type="button" class="js-add-form-btn<%= index %>"><%= t('.add_remark') %></button>
+              </div>
+            </td>
+          <% end %>
+        </tr>
+        <% @farm_places.each do |farm_place| %>
+          <% case farm_place.farm_number %>
+            <%# 1の畑の場合 %>
+            <% when @farm_places.first.farm_number then %>
+              <%# 種設置用 %>
+              <tr>
+                <td rowspan="18" class="border border-black"><%= FarmPlace.model_name.human %></td>
+                <td class="border border-black"><%= farm_place.farm_number.to_s + t('defaults.of_farm') %></td>
+                <td class="border border-black bg-slate-400"></td>
+                <% farm1_seeds = [:day2_farm1_seed, :day3_farm1_seed, :day4_farm1_seed, :day5_farm1_seed, :day6_farm1_seed, :day7_farm1_seed, :day8_farm1_seed] %>
+                <% farm1_seeds.each do |seed| %>
+                  <td class="border border-black">
+                    <%= f.collection_select seed, @flower_seeds, :id, :name, { prompt: t('.seed_choice') } %>
+                  </td>
+                <% end %>
+              </tr>
+              <%# キャラクター設置用 %>
+              <tr>
+                <td class="border border-black"><%= t('defaults.set_character') %></td>
+                <td class="border border-black bg-slate-400"></td>
+                <% farm1_characters = [:day2_farm1_character, :day3_farm1_character, :day4_farm1_character, :day5_farm1_character, :day6_farm1_character, :day7_farm1_character, :day8_farm1_character] %>
+                <% farm1_characters.each do |character| %>
+                  <td class="border border-black">
+                    <%= f.collection_select character, @selected_support_characters, :id, :name, { prompt: t('.character_choice') } %>
+                  </td>
+                <% end %>
+              </tr>
+            <%# 2の畑の場合 %>
+            <% when @farm_places.second.farm_number then %>
+              <%# 種設置用 %>
+              <tr>
+                <td class="border border-black"><%= farm_place.farm_number.to_s + t('defaults.of_farm') %></td>
+                <td class="border border-black bg-slate-400"></td>
+                <% farm2_seeds = [:day2_farm2_seed, :day3_farm2_seed, :day4_farm2_seed, :day5_farm2_seed, :day6_farm2_seed, :day7_farm2_seed, :day8_farm2_seed] %>
+                <% farm2_seeds.each do |seed| %>
+                  <td class="border border-black">
+                    <%= f.collection_select seed, @flower_seeds, :id, :name, { prompt: t('.seed_choice') } %>
+                  </td>
+                <% end %>
+              </tr>
+              <%# キャラクター設置用 %>
+              <tr>
+                <td class="border border-black"><%= t('defaults.set_character') %></td>
+                <td class="border border-black bg-slate-400"></td>
+                <% farm2_characters = [:day2_farm2_character, :day3_farm2_character, :day4_farm2_character, :day5_farm2_character, :day6_farm2_character, :day7_farm2_character, :day8_farm2_character] %>
+                <% farm2_characters.each do |character| %>
+                  <td class="border border-black">
+                    <%= f.collection_select character, @selected_support_characters, :id, :name, { prompt: t('.character_choice') } %>
+                  </td>
+                <% end %>
+              </tr>
+            <%# 3の畑の場合 %>
+            <% when @farm_places.third.farm_number then %>
+              <% not_selected_td = 5 %>
+              <%# 種設置用 %>
+              <tr>
+                <td class="border border-black"><%= farm_place.farm_number.to_s + t('defaults.of_farm') %></td>
+                <% not_selected_td.times do %>
+                  <td class="border border-black bg-slate-400"></td>
+                <% end %>
+                <% farm3_seeds = [:day6_farm3_seed, :day7_farm3_seed, :day8_farm3_seed] %>
+                <% farm3_seeds.each do |seed| %>
+                  <td class="border border-black">
+                    <%= f.collection_select seed, @flower_seeds, :id, :name, { prompt: t('.seed_choice') } %>
+                  </td>
+                <% end %>
+              </tr>
+              <%# キャラクター設置用 %>
+              <tr>
+                <td class="border border-black"><%= t('defaults.set_character') %></td>
+                <% not_selected_td.times do %>
+                  <td class="border border-black bg-slate-400"></td>
+                <% end %>
+                <% farm3_characters = [:day6_farm3_character, :day7_farm3_character, :day8_farm3_character] %>
+                <% farm3_characters.each do |character| %>
+                  <td class="border border-black">
+                    <%= f.collection_select character, @selected_support_characters, :id, :name, { prompt: t('.character_choice') } %>
+                  </td>
+                <% end %>
+              </tr>
+            <%# 4の畑の場合 %>
+            <% when @farm_places.fourth.farm_number then %>
+              <% not_selected_td = 6 %>
+              <%# 種設置用 %>
+              <tr>
+                <td class="border border-black"><%= farm_place.farm_number.to_s + t('defaults.of_farm') %></td>
+                <% not_selected_td.times do %>
+                  <td class="border border-black bg-slate-400"></td>
+                <% end %>
+                <% farm4_seeds = [:day7_farm4_seed, :day8_farm4_seed] %>
+                <% farm4_seeds.each do |seed| %>
+                  <td class="border border-black">
+                    <%= f.collection_select seed, @flower_seeds, :id, :name, { prompt: t('.seed_choice') } %>
+                  </td>
+                <% end %>
+              </tr>
+              <%# キャラクター設置用 %>
+              <tr>
+                <td class="border border-black"><%= t('defaults.set_character') %></td>
+                <% not_selected_td.times do %>
+                  <td class="border border-black bg-slate-400"></td>
+                <% end %>
+                <% farm4_characters = [:day7_farm4_character, :day8_farm4_character] %>
+                <% farm4_characters.each do |character| %>
+                  <td class="border border-black">
+                    <%= f.collection_select character, @selected_support_characters, :id, :name, { prompt: t('.character_choice') } %>
+                  </td>
+                <% end %>
+              </tr>
+            <%# 5の畑の場合 %>
+            <% when @farm_places.fifth.farm_number then %>
+              <% not_selected_td = 7 %>
+              <%# 種設置用 %>
+              <tr>
+                <td class="border border-black"><%= farm_place.farm_number.to_s + t('defaults.of_farm') %></td>
+                <% not_selected_td.times do %>
+                  <td class="border border-black bg-slate-400"></td>
+                <% end %>
+                <td class="border border-black">
+                  <%= f.collection_select :day8_farm5_seed, @flower_seeds, :id, :name, { prompt: t('.seed_choice') } %>
+                </td>
+              </tr>
+              <%# キャラクター設置用 %>
+              <tr>
+                <td class="border border-black"><%= t('defaults.set_character') %></td>
+                <% not_selected_td.times do %>
+                  <td class="border border-black bg-slate-400"></td>
+                <% end %>
+                <td class="border border-black">
+                  <%= f.collection_select :day8_farm5_character, @selected_support_characters, :id, :name, { prompt: t('.character_choice') } %>
+                </td>
+              </tr>
+            <%# 6~9の畑の場合 %>
+            <% else %>
+              <tr>
+                <td class="border border-black"><%= farm_place.farm_number.to_s + t('defaults.of_farm') %></td>
+                <% @turns.count.times do %>
+                  <td class="border border-black bg-slate-400"></td>
+                <% end %>
+              </tr>
+              <tr>
+                <td class="border border-black"><%= t('defaults.set_character') %></td>
+                <% @turns.count.times do %>
+                  <td class="border border-black bg-slate-400"></td>
+                <% end %>
+              </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="flex justify-between mt-8 mr-32 mb-8 ml-32">
+    <%= link_to (t '.return_step'), step2_path, class: 'rounded-lg border border-gray-300 bg-white px-5 py-2.5 text-center text-sm font-medium text-gray-700 shadow-sm transition-all hover:bg-gray-100 focus:ring focus:ring-gray-100 disabled:cursor-not-allowed disabled:border-gray-100 disabled:bg-gray-50 disabled:text-gray-400' %>
+    <%= f.submit (t '.next_step'), class: 'rounded-lg border border-gray-300 bg-white px-5 py-2.5 text-center text-sm font-medium text-gray-700 shadow-sm transition-all hover:bg-gray-100 focus:ring focus:ring-gray-100 disabled:cursor-not-allowed disabled:border-gray-100 disabled:bg-gray-50 disabled:text-gray-400' %>
+  </div>
+<% end %>

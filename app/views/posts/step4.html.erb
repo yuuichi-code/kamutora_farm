@@ -1,0 +1,5 @@
+<%= form_with model: @post_form_step4, url: create_step4_path, local: true do |f| %>
+  <%= f.text_field :body, name: 'post_form_step4[body][]' %>
+  <%= f.text_field :body, name: 'post_form_step4[body][]' %>
+  <%= f.submit %>
+<% end %>

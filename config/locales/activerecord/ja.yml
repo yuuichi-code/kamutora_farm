@@ -5,6 +5,9 @@ ja:
       post: '投稿'
       character: 'キャラクター'
       support_character: '修行仲間'
+      chapter: 'チャプター'
+      turn: 'ターン'
+      farm_place: '畑'
     attributes:
       user:
         name: '名前'
@@ -19,3 +22,29 @@ ja:
         name: '名前'
         unit_element: '属性'
         initial_rarity: '初期レアリティ'
+      chapter:
+        chapter_number: 'チャプター数'
+      turn:
+        turn_number: 'ターン数'
+      farm_place:
+        farm_number: '畑の番号'
+  activemodel:
+    attributes:
+      post_form_step1:
+        title: 'タイトル'
+        training_character: '育成キャラクター'
+        first_character: '1人目'
+        second_character: '2人目'
+        third_character: '3人目'
+        fourth_character: '4人目'
+        fifth_character: '5人目'
+        sixth_character: '6人目'
+      post_form_step2:
+        first_day_action: '1日目の行動'
+        second_day_action: '2日目の行動'
+        third_day_action: '3日目の行動'
+        fourth_day_action: '4日目の行動'
+        fifth_day_action: '5日目の行動'
+        sixth_day_action: '6日目の行動'
+        seventh_day_action: '7日目の行動'
+        eighth_day_action: '8日目の行動'
