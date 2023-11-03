@@ -1,3 +1,6 @@
+<% content_for :js do %>
+  <%= javascript_import_module_tag "custom/step2_add_remarks_column" %>
+<% end %>
 <%= render 'selected_characters', selected_support_characters: @selected_support_characters %>
 <%= render 'now_chapter', now_chapter: @now_chapter %>
 <%= form_with model: @post_form_step2, url: create_step2_path, local: true do |f| %>
@@ -26,7 +29,7 @@
                 <%= f.collection_select "#{day}", @actions, :id, :content, { prompt: t('.action_choice') } %>
               </div>
               <div class="js-remarks-field<%= index %>">
-                <button type="button" class="js-add-form-btn<%= index %>"><%= t('.add_remark') %></button>
+                <button type="button" class="js-add-form-btn<%= index %>-step2"><%= t('.add_remark') %></button>
               </div>
             </td>
           <% end %>

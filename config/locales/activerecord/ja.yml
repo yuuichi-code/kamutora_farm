@@ -48,3 +48,12 @@ ja:
         sixth_day_action: '6日目の行動'
         seventh_day_action: '7日目の行動'
         eighth_day_action: '8日目の行動'
+      post_form_step3:
+        first_day_action: '9日目の行動'
+        second_day_action: '10日目の行動'
+        third_day_action: '11日目の行動'
+        fourth_day_action: '12日目の行動'
+        fifth_day_action: '13日目の行動'
+        sixth_day_action: '14日目の行動'
+        seventh_day_action: '15日目の行動'
+        eighth_day_action: '16日目の行動'

@@ -6,13 +6,13 @@ function addRemarksField(turn, fieldName) {
 
 // 備考欄追加ボタンのクリックイベントを設定
 function setupAddRemarksButton(turn, fieldName) {
-  const button = document.querySelector(`.js-add-form-btn${turn}`);
+  const button = document.querySelector(`.js-add-form-btn${turn}-step2`);
   button.addEventListener('click', function() {
     addRemarksField(turn, fieldName);
   });
 }
 
-// 各ターンの備考欄追加ボタンを設定
+// chapter1の各ターンの備考欄追加ボタンを設定
 setupAddRemarksButton(1, 'first_day_remark');
 setupAddRemarksButton(2, 'second_day_remark');
 setupAddRemarksButton(3, 'third_day_remark');

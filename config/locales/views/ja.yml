@@ -52,3 +52,13 @@ ja:
     create_step2:
       to_second_chapter: '2の巻の内容を入力してください'
       fail: '入力し直してください'
+    step3:
+      action_choice: '行動選択'
+      add_remark: '備考欄追加'
+      seed_choice: '種選択'
+      character_choice: 'キャラクター選択'
+      return_step: '戻る'
+      next_step: '次へ'
+    create_step3:
+      to_third_chapter: '3の巻の内容を入力してください'
+      fail: '入力し直してください'
