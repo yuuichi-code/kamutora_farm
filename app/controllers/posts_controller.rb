@@ -391,6 +391,7 @@ class PostsController < ApplicationController
   def step4
     @post_form_step4 = PostFormStep4.new
     @now_chapter = Chapter.third
+    @selected_support_characters = Character.find(session[:support_characters])
   end
 
   def create_step4

@@ -1,6 +1,3 @@
-<% content_for :js do %>
-  <%= javascript_import_module_tag "custom/step2_add_remarks_column" %>
-<% end %>
 <%= render 'selected_characters', selected_support_characters: @selected_support_characters %>
 <%= render 'now_chapter', now_chapter: @now_chapter %>
 <%= form_with model: @post_form_step2, url: create_step2_path, local: true do |f| %>
@@ -23,13 +20,15 @@
           <td colspan="2" class="border border-black"></td>
           <%# 1日〜8日までの行動選択用 %>
           <% days = [:first_day_action, :second_day_action, :third_day_action, :fourth_day_action, :fifth_day_action, :sixth_day_action, :seventh_day_action, :eighth_day_action] %>
-          <% days.each.with_index(1) do |day, index| %>
+          <% days.each do |day| %>
             <td class="border border-black">
               <div>
                 <%= f.collection_select "#{day}", @actions, :id, :content, { prompt: t('.action_choice') } %>
               </div>
-              <div class="js-remarks-field<%= index %>">
-                <button type="button" class="js-add-form-btn<%= index %>-step2"><%= t('.add_remark') %></button>
+              <div data-controller="remarks">
+                <button data-action="click->remarks#remarks_btn" data-target="remarks.remarks" data-field-name="<%= "#{day.to_s.gsub('_action', '_remark')}" %>" data-now-step="step2" type="button">
+                  <%= t('.add_remark') %>
+                </button>
               </div>
             </td>
           <% end %>
