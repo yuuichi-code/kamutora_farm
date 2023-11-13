@@ -48,6 +48,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_26_144506) do
     t.integer "farm_number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["farm_number"], name: "index_farm_places_on_farm_number", unique: true
   end
 
   create_table "flower_seeds", force: :cascade do |t|
