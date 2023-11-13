@@ -5,5 +5,6 @@ class CreateFarmPlaces < ActiveRecord::Migration[7.0]
 
       t.timestamps
     end
+    add_index :farm_places, :farm_number, unique: true
   end
 end
