@@ -12,5 +12,7 @@ Rails.application.routes.draw do
   post 'create_step3' => 'posts#create_step3'
   get 'step4' => 'posts#step4'
   post 'create_step4' => 'posts#create_step4'
+  get 'step5' => 'posts#step5'
+  post 'create_step5' => 'posts#create_step5'
   resources :posts, only: %i[create]
 end

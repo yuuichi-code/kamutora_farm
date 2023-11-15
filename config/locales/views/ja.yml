@@ -16,6 +16,13 @@ ja:
     day: '日目'
     of_farm: 'の畑'
     set_character: 'キャラ'
+    action_choice: '行動選択'
+    add_remark: '備考欄追加'
+    seed_choice: '種選択'
+    character_choice: 'キャラクター選択'
+    return_step: '戻る'
+    next_step: '次へ'
+    reenter: '再入力してください'
   users:
     new:
       title: '新規登録'
@@ -38,27 +45,11 @@ ja:
     step1:
       support_character_choice: '修行仲間選択'
       training_character_choice: '育成キャラクター選択'
-      next_step: '次へ'
     create_step1:
       to_first_chapter: '1の巻の内容を入力してください'
-      fail: '入力し直してください'
-    step2:
-      action_choice: '行動選択'
-      add_remark: '備考欄追加'
-      seed_choice: '種選択'
-      character_choice: 'キャラクター選択'
-      return_step: '戻る'
-      next_step: '次へ'
     create_step2:
       to_second_chapter: '2の巻の内容を入力してください'
-      fail: '入力し直してください'
-    step3:
-      action_choice: '行動選択'
-      add_remark: '備考欄追加'
-      seed_choice: '種選択'
-      character_choice: 'キャラクター選択'
-      return_step: '戻る'
-      next_step: '次へ'
     create_step3:
       to_third_chapter: '3の巻の内容を入力してください'
-      fail: '入力し直してください'
+    create_step4:
+      to_fourth_chapter: '4の巻の内容を入力してください'

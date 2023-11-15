@@ -1,5 +1,4 @@
-<%= form_with model: @post_form_step4, url: create_step4_path, local: true do |f| %>
-  <%= f.text_field :body, name: 'post_form_step4[body][]' %>
-  <%= f.text_field :body, name: 'post_form_step4[body][]' %>
-  <%= f.submit %>
-<% end %>
+<%= render 'selected_characters', selected_support_characters: @selected_support_characters %>
+<%= render 'now_chapter', now_chapter: @now_chapter %>
+<%# チャプター3(17日目〜24日目)の入力フォーム %>
+<%= render "full_farm_form", post_form_step: @post_form_step4, create_step: create_step4_path, step_number: "step4", return_step: step3_path %>

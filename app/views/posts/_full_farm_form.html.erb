@@ -1,6 +1,4 @@
-<%= render 'selected_characters', selected_support_characters: @selected_support_characters %>
-<%= render 'now_chapter', now_chapter: @now_chapter %>
-<%= form_with model: @post_form_step3, url: create_step3_path, local: true do |f| %>
+<%= form_with model: post_form_step, url: create_step, local: true do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
   <div class="mt-6 flex justify-center">
     <table>
@@ -18,7 +16,7 @@
       <tbody class="border border-black">
         <tr>
           <td colspan="2" class="border border-black"></td>
-          <%# 9日〜16日までの行動選択用 %>
+          <%# 行動選択用 %>
           <% days = [:first_day_action, :second_day_action, :third_day_action, :fourth_day_action, :fifth_day_action, :sixth_day_action, :seventh_day_action, :eighth_day_action] %>
           <% days.each do |day| %>
             <td class="border border-black">
@@ -26,7 +24,7 @@
                 <%= f.collection_select "#{day}", @actions, :id, :content, { prompt: t('defaults.action_choice') } %>
               </div>
               <div data-controller="remarks">
-                <button data-action="click->remarks#remarks_btn" data-target="remarks.remarks" data-field-name="<%= "#{day.to_s.gsub('_action', '_remark')}" %>" data-now-step="step3" type="button">
+                <button data-action="click->remarks#remarks_btn" data-target="remarks.remarks" data-field-name="<%= "#{day.to_s.gsub('_action', '_remark')}" %>" data-now-step="<%= step_number %>" type="button">
                   <%= t('defaults.add_remark') %>
                 </button>
               </div>
@@ -173,8 +171,7 @@
               <%# 種設置用 %>
               <tr>
                 <td class="border border-black"><%= farm_place.farm_number.to_s + t('defaults.of_farm') %></td>
-                <td class="border border-black bg-slate-400"></td>
-                <% farm7_seeds = [:day2_farm7_seed, :day3_farm7_seed, :day4_farm7_seed, :day5_farm7_seed, :day6_farm7_seed, :day7_farm7_seed, :day8_farm7_seed] %>
+                <% farm7_seeds = [:day1_farm7_seed, :day2_farm7_seed, :day3_farm7_seed, :day4_farm7_seed, :day5_farm7_seed, :day6_farm7_seed, :day7_farm7_seed, :day8_farm7_seed] %>
                 <% farm7_seeds.each do |seed| %>
                   <td class="border border-black">
                     <%= f.collection_select seed, @flower_seeds, :id, :name, { prompt: t('defaults.seed_choice') } %>
@@ -184,8 +181,7 @@
               <%# キャラクター設置用 %>
               <tr>
                 <td class="border border-black"><%= t('defaults.set_character') %></td>
-                <td class="border border-black bg-slate-400"></td>
-                <% farm7_characters = [:day2_farm7_character, :day3_farm7_character, :day4_farm7_character, :day5_farm7_character, :day6_farm7_character, :day7_farm7_character, :day8_farm7_character] %>
+                <% farm7_characters = [:day1_farm7_character, :day2_farm7_character, :day3_farm7_character, :day4_farm7_character, :day5_farm7_character, :day6_farm7_character, :day7_farm7_character, :day8_farm7_character] %>
                 <% farm7_characters.each do |character| %>
                   <td class="border border-black">
                     <%= f.collection_select character, @selected_support_characters, :id, :name, { prompt: t('defaults.character_choice') } %>
@@ -197,9 +193,7 @@
               <%# 種設置用 %>
               <tr>
                 <td class="border border-black"><%= farm_place.farm_number.to_s + t('defaults.of_farm') %></td>
-                <td class="border border-black bg-slate-400"></td>
-                <td class="border border-black bg-slate-400"></td>
-                <% farm8_seeds = [:day3_farm8_seed, :day4_farm8_seed, :day5_farm8_seed, :day6_farm8_seed, :day7_farm8_seed, :day8_farm8_seed] %>
+                <% farm8_seeds = [:day1_farm8_seed, :day2_farm8_seed, :day3_farm8_seed, :day4_farm8_seed, :day5_farm8_seed, :day6_farm8_seed, :day7_farm8_seed, :day8_farm8_seed] %>
                 <% farm8_seeds.each do |seed| %>
                   <td class="border border-black">
                     <%= f.collection_select seed, @flower_seeds, :id, :name, { prompt: t('defaults.seed_choice') } %>
@@ -209,9 +203,7 @@
               <%# キャラクター設置用 %>
               <tr>
                 <td class="border border-black"><%= t('defaults.set_character') %></td>
-                <td class="border border-black bg-slate-400"></td>
-                <td class="border border-black bg-slate-400"></td>
-                <% farm8_characters = [:day3_farm8_character, :day4_farm8_character, :day5_farm8_character, :day6_farm8_character, :day7_farm8_character, :day8_farm8_character] %>
+                <% farm8_characters = [:day1_farm8_character, :day2_farm8_character, :day3_farm8_character, :day4_farm8_character, :day5_farm8_character, :day6_farm8_character, :day7_farm8_character, :day8_farm8_character] %>
                 <% farm8_characters.each do |character| %>
                   <td class="border border-black">
                     <%= f.collection_select character, @selected_support_characters, :id, :name, { prompt: t('defaults.character_choice') } %>
@@ -223,9 +215,7 @@
               <%# 種設置用 %>
               <tr>
                 <td class="border border-black"><%= farm_place.farm_number.to_s + t('defaults.of_farm') %></td>
-                <td class="border border-black bg-slate-400"></td>
-                <td class="border border-black bg-slate-400"></td>
-                <% farm9_seeds = [:day3_farm9_seed, :day4_farm9_seed, :day5_farm9_seed, :day6_farm9_seed, :day7_farm9_seed, :day8_farm9_seed] %>
+                <% farm9_seeds = [:day1_farm9_seed, :day2_farm9_seed, :day3_farm9_seed, :day4_farm9_seed, :day5_farm9_seed, :day6_farm9_seed, :day7_farm9_seed, :day8_farm9_seed] %>
                 <% farm9_seeds.each do |seed| %>
                   <td class="border border-black">
                     <%= f.collection_select seed, @flower_seeds, :id, :name, { prompt: t('defaults.seed_choice') } %>
@@ -235,9 +225,7 @@
               <%# キャラクター設置用 %>
               <tr>
                 <td class="border border-black"><%= t('defaults.set_character') %></td>
-                <td class="border border-black bg-slate-400"></td>
-                <td class="border border-black bg-slate-400"></td>
-                <% farm9_characters = [:day3_farm9_character, :day4_farm9_character, :day5_farm9_character, :day6_farm9_character, :day7_farm9_character, :day8_farm9_character] %>
+                <% farm9_characters = [:day1_farm9_character, :day2_farm9_character, :day3_farm9_character, :day4_farm9_character, :day5_farm9_character, :day6_farm9_character, :day7_farm9_character, :day8_farm9_character] %>
                 <% farm9_characters.each do |character| %>
                   <td class="border border-black">
                     <%= f.collection_select character, @selected_support_characters, :id, :name, { prompt: t('defaults.character_choice') } %>
@@ -250,7 +238,7 @@
     </table>
   </div>
   <div class="flex justify-between mt-8 mr-32 mb-8 ml-32">
-    <%= link_to (t 'defaults.return_step'), step2_path, class: 'rounded-lg border border-gray-300 bg-white px-5 py-2.5 text-center text-sm font-medium text-gray-700 shadow-sm transition-all hover:bg-gray-100 focus:ring focus:ring-gray-100 disabled:cursor-not-allowed disabled:border-gray-100 disabled:bg-gray-50 disabled:text-gray-400' %>
+    <%= link_to (t 'defaults.return_step'), return_step, class: 'rounded-lg border border-gray-300 bg-white px-5 py-2.5 text-center text-sm font-medium text-gray-700 shadow-sm transition-all hover:bg-gray-100 focus:ring focus:ring-gray-100 disabled:cursor-not-allowed disabled:border-gray-100 disabled:bg-gray-50 disabled:text-gray-400' %>
     <%= f.submit (t 'defaults.next_step'), class: 'rounded-lg border border-gray-300 bg-white px-5 py-2.5 text-center text-sm font-medium text-gray-700 shadow-sm transition-all hover:bg-gray-100 focus:ring focus:ring-gray-100 disabled:cursor-not-allowed disabled:border-gray-100 disabled:bg-gray-50 disabled:text-gray-400' %>
   </div>
 <% end %>
