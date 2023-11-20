@@ -93,3 +93,5 @@ gem "sentry-rails", "~> 5.10"
 gem "sorcery"
 # 日本語化のため
 gem "rails-i18n"
+# Redis利用のため
+gem "redis-actionpack"
