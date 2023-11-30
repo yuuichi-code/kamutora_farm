@@ -881,11 +881,18 @@ class PostsController < ApplicationController
   end
 
   def step6
-
+    @training_character = TrainingCharacter.new
   end
 
   def create_step6
-
+    post = current_user.posts.create(title: session[:post_title])
+    # 育成キャラクターの保存
+    training_character_params_with_character_id = training_character_params.merge(character_id: session[:training_character])
+    @training_character = post.create_training_character(training_character_params_with_character_id)
+    # 修行仲間の保存
+    session[:support_characters].each do |support_character_id|
+      post.support_characters.create(character_id: support_character_id)
+    end
   end
 
   private
@@ -1519,5 +1526,9 @@ class PostsController < ApplicationController
       :day7_farm9_character,
       :day8_farm9_character
     )
+  end
+
+  def training_character_params
+    params.require(:training_character).permit(:hp, :atk, :def, :spd, :crt, :crd, :hit, :avd, :character_id)
   end
 end

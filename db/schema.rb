@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_26_144506) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_22_133640) do
   create_table "actions", force: :cascade do |t|
     t.string "content", null: false
     t.datetime "created_at", null: false
@@ -76,6 +76,24 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_26_144506) do
     t.index ["post_id"], name: "index_support_characters_on_post_id"
   end
 
+  create_table "training_characters", force: :cascade do |t|
+    t.integer "hp"
+    t.integer "atk"
+    t.integer "def"
+    t.integer "spd"
+    t.integer "crt"
+    t.integer "crd"
+    t.integer "hit"
+    t.integer "avd"
+    t.integer "max_exp"
+    t.integer "character_id", null: false
+    t.integer "post_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["character_id"], name: "index_training_characters_on_character_id"
+    t.index ["post_id"], name: "index_training_characters_on_post_id"
+  end
+
   create_table "turns", force: :cascade do |t|
     t.integer "turn_number", null: false
     t.datetime "created_at", null: false
@@ -98,4 +116,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_26_144506) do
   add_foreign_key "posts", "users"
   add_foreign_key "support_characters", "characters"
   add_foreign_key "support_characters", "posts"
+  add_foreign_key "training_characters", "characters"
+  add_foreign_key "training_characters", "posts"
 end
