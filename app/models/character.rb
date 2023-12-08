@@ -1,6 +1,7 @@
 class Character < ApplicationRecord
   has_many :support_characters, dependent: :destroy
   has_many :posts, through: :support_characters, dependent: :destroy
+  has_many :character_fields
 
   validates :name, presence: true, uniqueness: true
   validates :unit_element, presence: true

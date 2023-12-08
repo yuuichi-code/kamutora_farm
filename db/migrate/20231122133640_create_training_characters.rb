@@ -15,5 +15,6 @@ class CreateTrainingCharacters < ActiveRecord::Migration[7.0]
 
       t.timestamps
     end
+    add_index :training_characters, [:chapter_id, :post_id], unique: true
   end
 end

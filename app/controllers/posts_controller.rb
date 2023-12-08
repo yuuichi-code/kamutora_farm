@@ -1,7 +1,9 @@
 class PostsController < ApplicationController
   skip_before_action :require_login, only: %i[index]
 
-  def index; end
+  def index
+    @posts = Post.all
+  end
 
   def create; end
 
@@ -65,85 +67,269 @@ class PostsController < ApplicationController
       ]
       # チャプター1備考欄用
       session[:chapter1_remarks] = [
-        @post_form_step2.first_day_remark,
-        @post_form_step2.second_day_remark,
-        @post_form_step2.third_day_remark,
-        @post_form_step2.fourth_day_remark,
-        @post_form_step2.fifth_day_remark,
-        @post_form_step2.sixth_day_remark,
-        @post_form_step2.seventh_day_remark,
-        @post_form_step2.eighth_day_remark
-      ]
+        {
+          remark: @post_form_step2.first_day_remark,
+          chapter_turn: ChapterTurn.chapter1_turn1
+        },
+        {
+          remark: @post_form_step2.second_day_remark,
+          chapter_turn: ChapterTurn.chapter1_turn2
+        },
+        {
+          remark: @post_form_step2.third_day_remark,
+          chapter_turn: ChapterTurn.chapter1_turn3
+        },
+        {
+          remark: @post_form_step2.fourth_day_remark,
+          chapter_turn: ChapterTurn.chapter1_turn4
+        },
+        {
+          remark: @post_form_step2.fifth_day_remark,
+          chapter_turn: ChapterTurn.chapter1_turn5
+        },
+        {
+          remark: @post_form_step2.sixth_day_remark,
+          chapter_turn: ChapterTurn.chapter1_turn6
+        },
+        {
+          remark: @post_form_step2.seventh_day_remark,
+          chapter_turn: ChapterTurn.chapter1_turn7
+        },
+        {
+          remark: @post_form_step2.eighth_day_remark,
+          chapter_turn: ChapterTurn.chapter1_turn8
+        }
+      ].reject { |hash| hash[:remark].nil? }
       # チャプター1畑1の種用
       session[:chapter1_farm1_seeds] = [
-        @post_form_step2.day2_farm1_seed,
-        @post_form_step2.day3_farm1_seed,
-        @post_form_step2.day4_farm1_seed,
-        @post_form_step2.day5_farm1_seed,
-        @post_form_step2.day6_farm1_seed,
-        @post_form_step2.day7_farm1_seed,
-        @post_form_step2.day8_farm1_seed
-      ]
+        {
+          farm_place: FarmPlace.place1,
+          seed: @post_form_step2.day2_farm1_seed,
+          chapter_turn: ChapterTurn.chapter1_turn2
+        },
+        {
+          farm_place: FarmPlace.place1,
+          seed: @post_form_step2.day3_farm1_seed,
+          chapter_turn: ChapterTurn.chapter1_turn3
+        },
+        {
+          farm_place: FarmPlace.place1,
+          seed: @post_form_step2.day4_farm1_seed,
+          chapter_turn: ChapterTurn.chapter1_turn4
+        },
+        {
+          farm_place: FarmPlace.place1,
+          seed: @post_form_step2.day5_farm1_seed,
+          chapter_turn: ChapterTurn.chapter1_turn5
+        },
+        {
+          farm_place: FarmPlace.place1,
+          seed: @post_form_step2.day6_farm1_seed,
+          chapter_turn: ChapterTurn.chapter1_turn6
+        },
+        {
+          farm_place: FarmPlace.place1,
+          seed: @post_form_step2.day7_farm1_seed,
+          chapter_turn: ChapterTurn.chapter1_turn7
+        },
+        {
+          farm_place: FarmPlace.place1,
+          seed: @post_form_step2.day8_farm1_seed,
+          chapter_turn: ChapterTurn.chapter1_turn8
+        }
+      ].reject { |hash| hash[:seed].nil? }
       # チャプター1畑1の設置キャラクター用
       session[:chapter1_farm1_characters] = [
-        @post_form_step2.day2_farm1_character,
-        @post_form_step2.day3_farm1_character,
-        @post_form_step2.day4_farm1_character,
-        @post_form_step2.day5_farm1_character,
-        @post_form_step2.day6_farm1_character,
-        @post_form_step2.day7_farm1_character,
-        @post_form_step2.day8_farm1_character
-      ]
+        {
+          farm_place: FarmPlace.place1,
+          character: @post_form_step2.day2_farm1_character,
+          chapter_turn: ChapterTurn.chapter1_turn2
+        },
+        {
+          farm_place: FarmPlace.place1,
+          character: @post_form_step2.day3_farm1_character,
+          chapter_turn: ChapterTurn.chapter1_turn3
+        },
+        {
+          farm_place: FarmPlace.place1,
+          character: @post_form_step2.day4_farm1_character,
+          chapter_turn: ChapterTurn.chapter1_turn4
+        },
+        {
+          farm_place: FarmPlace.place1,
+          character: @post_form_step2.day5_farm1_character,
+          chapter_turn: ChapterTurn.chapter1_turn5
+        },
+        {
+          farm_place: FarmPlace.place1,
+          character: @post_form_step2.day6_farm1_character,
+          chapter_turn: ChapterTurn.chapter1_turn6
+        },
+        {
+          farm_place: FarmPlace.place1,
+          character: @post_form_step2.day7_farm1_character,
+          chapter_turn: ChapterTurn.chapter1_turn7
+        },
+        {
+          farm_place: FarmPlace.place1,
+          character: @post_form_step2.day8_farm1_character,
+          chapter_turn: ChapterTurn.chapter1_turn8
+        }
+      ].reject { |hash| hash[:character].nil? }
       # チャプター1畑2の種用
       session[:chapter1_farm2_seeds] = [
-        @post_form_step2.day2_farm2_seed,
-        @post_form_step2.day3_farm2_seed,
-        @post_form_step2.day4_farm2_seed,
-        @post_form_step2.day5_farm2_seed,
-        @post_form_step2.day6_farm2_seed,
-        @post_form_step2.day7_farm2_seed,
-        @post_form_step2.day8_farm2_seed
-      ]
+        {
+          farm_place: FarmPlace.place2,
+          seed: @post_form_step2.day2_farm2_seed,
+          chapter_turn: ChapterTurn.chapter1_turn2
+        },
+        {
+          farm_place: FarmPlace.place2,
+          seed: @post_form_step2.day3_farm2_seed,
+          chapter_turn: ChapterTurn.chapter1_turn3
+        },
+        {
+          farm_place: FarmPlace.place2,
+          seed: @post_form_step2.day4_farm2_seed,
+          chapter_turn: ChapterTurn.chapter1_turn4
+        },
+        {
+          farm_place: FarmPlace.place2,
+          seed: @post_form_step2.day5_farm2_seed,
+          chapter_turn: ChapterTurn.chapter1_turn5
+        },
+        {
+          farm_place: FarmPlace.place2,
+          seed: @post_form_step2.day6_farm2_seed,
+          chapter_turn: ChapterTurn.chapter1_turn6
+        },
+        {
+          farm_place: FarmPlace.place2,
+          seed: @post_form_step2.day7_farm2_seed,
+          chapter_turn: ChapterTurn.chapter1_turn7
+        },
+        {
+          farm_place: FarmPlace.place2,
+          seed: @post_form_step2.day8_farm2_seed,
+          chapter_turn: ChapterTurn.chapter1_turn8
+        }
+      ].reject { |hash| hash[:seed].nil? }
       # チャプター1畑2の設置キャラクター用
       session[:chapter1_farm2_characters] = [
-        @post_form_step2.day2_farm2_character,
-        @post_form_step2.day3_farm2_character,
-        @post_form_step2.day4_farm2_character,
-        @post_form_step2.day5_farm2_character,
-        @post_form_step2.day6_farm2_character,
-        @post_form_step2.day7_farm2_character,
-        @post_form_step2.day8_farm2_character
-      ]
+        {
+          farm_place: FarmPlace.place2,
+          character: @post_form_step2.day2_farm2_character,
+          chapter_turn: ChapterTurn.chapter1_turn2
+        },
+        {
+          farm_place: FarmPlace.place2,
+          character: @post_form_step2.day3_farm2_character,
+          chapter_turn: ChapterTurn.chapter1_turn3
+        },
+        {
+          farm_place: FarmPlace.place2,
+          character: @post_form_step2.day4_farm2_character,
+          chapter_turn: ChapterTurn.chapter1_turn4
+        },
+        {
+          farm_place: FarmPlace.place2,
+          character: @post_form_step2.day5_farm2_character,
+          chapter_turn: ChapterTurn.chapter1_turn5
+        },
+        {
+          farm_place: FarmPlace.place2,
+          character: @post_form_step2.day6_farm2_character,
+          chapter_turn: ChapterTurn.chapter1_turn6
+        },
+        {
+          farm_place: FarmPlace.place2,
+          character: @post_form_step2.day7_farm2_character,
+          chapter_turn: ChapterTurn.chapter1_turn7
+        },
+        {
+          farm_place: FarmPlace.place2,
+          character: @post_form_step2.day8_farm2_character,
+          chapter_turn: ChapterTurn.chapter1_turn8
+        }
+      ].reject { |hash| hash[:character].nil? }
       # チャプター1畑3の種用
       session[:chapter1_farm3_seeds] = [
-        @post_form_step2.day6_farm3_seed,
-        @post_form_step2.day7_farm3_seed,
-        @post_form_step2.day8_farm3_seed
-      ]
+        {
+          farm_place: FarmPlace.place3,
+          seed: @post_form_step2.day6_farm3_seed,
+          chapter_turn: ChapterTurn.chapter1_turn2
+        },
+        {
+          farm_place: FarmPlace.place3,
+          seed: @post_form_step2.day7_farm3_seed,
+          chapter_turn: ChapterTurn.chapter1_turn3
+        },
+        {
+          farm_place: FarmPlace.place3,
+          seed: @post_form_step2.day8_farm3_seed,
+          chapter_turn: ChapterTurn.chapter1_turn4
+        }
+      ].reject { |hash| hash[:seed].nil? }
       # チャプター1畑3の設置キャラクター用
       session[:chapter1_farm3_characters] = [
-        @post_form_step2.day6_farm3_character,
-        @post_form_step2.day7_farm3_character,
-        @post_form_step2.day8_farm3_character
-      ]
+        {
+          farm_place: FarmPlace.place3,
+          character: @post_form_step2.day6_farm3_character,
+          chapter_turn: ChapterTurn.chapter1_turn2
+        },
+        {
+          farm_place: FarmPlace.place3,
+          character: @post_form_step2.day7_farm3_character,
+          chapter_turn: ChapterTurn.chapter1_turn3
+        },
+        {
+          farm_place: FarmPlace.place3,
+          character: @post_form_step2.day8_farm3_character,
+          chapter_turn: ChapterTurn.chapter1_turn4
+        }
+      ].reject { |hash| hash[:character].nil? }
       # チャプター1畑4の種用
       session[:chapter1_farm4_seeds] = [
-        @post_form_step2.day7_farm4_seed,
-        @post_form_step2.day8_farm4_seed
-      ]
+        {
+          farm_place: FarmPlace.place4,
+          seed: @post_form_step2.day7_farm4_seed,
+          chapter_turn: ChapterTurn.chapter1_turn2
+        },
+        {
+          farm_place: FarmPlace.place4,
+          seed: @post_form_step2.day8_farm4_seed,
+          chapter_turn: ChapterTurn.chapter1_turn3
+        }
+      ].reject { |hash| hash[:seed].nil? }
       # チャプター1畑4の設置キャラクター用
       session[:chapter1_farm4_characters] = [
-        @post_form_step2.day7_farm4_character,
-        @post_form_step2.day8_farm4_character
-      ]
+        {
+          farm_place: FarmPlace.place4,
+          character: @post_form_step2.day7_farm4_character,
+          chapter_turn: ChapterTurn.chapter1_turn3
+        },
+        {
+          farm_place: FarmPlace.place4,
+          character: @post_form_step2.day8_farm4_character,
+          chapter_turn: ChapterTurn.chapter1_turn4
+        }
+      ].reject { |hash| hash[:character].nil? }
       # チャプター1畑5の種用
       session[:chapter1_farm5_seeds] = [
-        @post_form_step2.day8_farm5_seed
-      ]
+        {
+          farm_place: FarmPlace.place5,
+          seed: @post_form_step2.day8_farm5_seed,
+          chapter_turn: ChapterTurn.chapter1_turn3
+        }
+      ].reject { |hash| hash[:seed].nil? }
       # チャプター1畑5の設置キャラクター用
       session[:chapter1_farm5_characters] = [
-        @post_form_step2.day8_farm5_character
-      ]
+        {
+          farm_place: FarmPlace.place5,
+          character: @post_form_step2.day8_farm5_character,
+          chapter_turn: ChapterTurn.chapter1_turn4
+        }
+      ].reject { |hash| hash[:character].nil? }
       redirect_to step3_path, notice: t('.to_second_chapter')
     else
       flash.now[:alert] = t('defaults.reenter')
@@ -892,6 +1078,55 @@ class PostsController < ApplicationController
     # 修行仲間の保存
     session[:support_characters].each do |support_character_id|
       post.support_characters.create(character_id: support_character_id)
+    end
+    # 1巻の行動の保存
+    chapter1_days = ChapterTurn.where(chapter_id: 1)
+    session[:chapter1_actions].zip(chapter1_days) do |action, chapter1_day|
+      post.training_actions.create(action_id: action, chapter_turn_id: chapter1_day.id)
+    end
+    # 1巻の備考欄保存
+    session[:chapter1_remarks].each do |chapter1|
+      post.training_advices.create(content: chapter1[:remark], chapter_turn_id: chapter1[:chapter_turn])
+    end
+    # 1巻の畑1の種保存
+    session[:chapter1_farm1_seeds].each do |chapter1|
+      post.flower_fields.create(farm_place_id: chapter1[:farm_place], flower_seed_id: chapter1[:seed], chapter_turn_id: chapter1[:chapter_turn])
+    end
+    # 1巻の畑1の設置キャラクター保存
+    session[:chapter1_farm1_characters].each do |chapter1|
+      post.character_fields.create(farm_place_id: chapter1[:farm_place], character_id: chapter1[:character], chapter_turn_id: chapter1[:chapter_turn])
+    end
+    # 1巻の畑2の種保存
+    session[:chapter1_farm2_seeds].each do |chapter1|
+      post.flower_fields.create(farm_place_id: chapter1[:farm_place], flower_seed_id: chapter1[:seed], chapter_turn_id: chapter1[:chapter_turn])
+    end
+    # 1巻の畑2の設置キャラクター保存
+    session[:chapter1_farm2_characters].each do |chapter1|
+      post.character_fields.create(farm_place_id: chapter1[:farm_place], character_id: chapter1[:character], chapter_turn_id: chapter1[:chapter_turn])
+    end
+    # 1巻の畑3の種保存
+    session[:chapter1_farm3_seeds].each do |chapter1|
+      post.flower_fields.create(farm_place_id: chapter1[:farm_place], flower_seed_id: chapter1[:seed], chapter_turn_id: chapter1[:chapter_turn])
+    end
+    # 1巻の畑3の設置キャラクター保存
+    session[:chapter1_farm3_characters].each do |chapter1|
+      post.character_fields.create(farm_place_id: chapter1[:farm_place], character_id: chapter1[:character], chapter_turn_id: chapter1[:chapter_turn])
+    end
+    # 1巻の畑4の種保存
+    session[:chapter1_farm4_seeds].each do |chapter1|
+      post.flower_fields.create(farm_place_id: chapter1[:farm_place], flower_seed_id: chapter1[:seed], chapter_turn_id: chapter1[:chapter_turn])
+    end
+    # 1巻の畑4の設置キャラクター保存
+    session[:chapter1_farm4_characters].each do |chapter1|
+      post.character_fields.create(farm_place_id: chapter1[:farm_place], character_id: chapter1[:character], chapter_turn_id: chapter1[:chapter_turn])
+    end
+    # 1巻の畑5の種保存
+    session[:chapter1_farm5_seeds].each do |chapter1|
+      post.flower_fields.create(farm_place_id: chapter1[:farm_place], flower_seed_id: chapter1[:seed], chapter_turn_id: chapter1[:chapter_turn])
+    end
+    # 1巻の畑5の設置キャラクター保存
+    session[:chapter1_farm5_characters].each do |chapter1|
+      post.character_fields.create(farm_place_id: chapter1[:farm_place], character_id: chapter1[:character], chapter_turn_id: chapter1[:chapter_turn])
     end
   end
 
