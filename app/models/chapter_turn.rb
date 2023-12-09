@@ -129,4 +129,44 @@ class ChapterTurn < ApplicationRecord
     chapter_turn = find_by(chapter_id: 3, turn_id: 8)
     chapter_turn&.id
   end
+
+  def self.chapter4_turn1
+    chapter_turn = find_by(chapter_id: 4, turn_id: 1)
+    chapter_turn&.id
+  end
+
+  def self.chapter4_turn2
+    chapter_turn = find_by(chapter_id: 4, turn_id: 2)
+    chapter_turn&.id
+  end
+
+  def self.chapter4_turn3
+    chapter_turn = find_by(chapter_id: 4, turn_id: 3)
+    chapter_turn&.id
+  end
+
+  def self.chapter4_turn4
+    chapter_turn = find_by(chapter_id: 4, turn_id: 4)
+    chapter_turn&.id
+  end
+
+  def self.chapter4_turn5
+    chapter_turn = find_by(chapter_id: 4, turn_id: 5)
+    chapter_turn&.id
+  end
+
+  def self.chapter4_turn6
+    chapter_turn = find_by(chapter_id: 4, turn_id: 6)
+    chapter_turn&.id
+  end
+
+  def self.chapter4_turn7
+    chapter_turn = find_by(chapter_id: 4, turn_id: 7)
+    chapter_turn&.id
+  end
+
+  def self.chapter4_turn8
+    chapter_turn = find_by(chapter_id: 4, turn_id: 8)
+    chapter_turn&.id
+  end
 end
