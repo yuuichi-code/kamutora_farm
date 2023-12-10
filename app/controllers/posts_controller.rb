@@ -3135,7 +3135,6 @@ class PostsController < ApplicationController
     session[:chapter4_farm9_characters].each do |chapter4|
       post.character_fields.create(farm_place_id: chapter4[:farm_place], character_id: chapter4[:character], chapter_turn_id: chapter4[:chapter_turn])
     end
-    binding.b
   end
 
   private

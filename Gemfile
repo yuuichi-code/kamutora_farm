@@ -55,6 +55,10 @@ group :development, :test do
   gem "sqlite3", "~> 1.4"
 end
 
+group :development, :production do
+  gem "dotenv-rails"
+end
+
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
@@ -81,7 +85,6 @@ end
 
 group :production do
   gem "pg", "~> 1.5"
-  gem "dotenv-rails"
 end
 
 gem "dockerfile-rails", ">= 1.5", :group => :development
