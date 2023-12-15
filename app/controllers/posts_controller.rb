@@ -2,7 +2,7 @@ class PostsController < ApplicationController
   skip_before_action :require_login, only: %i[index]
 
   def index
-    @posts = Post.all
+    @posts = Post.includes(support_characters: :character).all
   end
 
   def create; end
@@ -2831,309 +2831,313 @@ class PostsController < ApplicationController
   end
 
   def create_step6
-    post = current_user.posts.create(title: session[:post_title])
+    post = current_user.posts.build(title: session[:post_title])
     # 育成キャラクターの保存
     training_character_params_with_character_id = training_character_params.merge(character_id: session[:training_character])
-    @training_character = post.create_training_character(training_character_params_with_character_id)
-    # 修行仲間の保存
-    session[:support_characters].each do |support_character_id|
-      post.support_characters.create(character_id: support_character_id)
-    end
+    #@training_character = post.create_training_character(training_character_params_with_character_id)
+    @training_character = post.build_training_character(training_character_params_with_character_id)
+    if post.save
+      @training_character.save
+      # 修行仲間の保存
+      session[:support_characters].each do |support_character_id|
+        post.support_characters.create(character_id: support_character_id)
+      end
 
-    # 1巻の行動の保存
-    chapter1_days = ChapterTurn.where(chapter_id: 1)
-    session[:chapter1_actions].zip(chapter1_days) do |action, chapter1_day|
-      post.training_actions.create(action_id: action, chapter_turn_id: chapter1_day.id)
-    end
-    # 1巻の備考欄保存
-    session[:chapter1_remarks].each do |chapter1|
-      post.training_advices.create(content: chapter1[:remark], chapter_turn_id: chapter1[:chapter_turn])
-    end
-    # 1巻の畑1の種保存
-    session[:chapter1_farm1_seeds].each do |chapter1|
-      post.flower_fields.create(farm_place_id: chapter1[:farm_place], flower_seed_id: chapter1[:seed], chapter_turn_id: chapter1[:chapter_turn])
-    end
-    # 1巻の畑1の設置キャラクター保存
-    session[:chapter1_farm1_characters].each do |chapter1|
-      post.character_fields.create(farm_place_id: chapter1[:farm_place], character_id: chapter1[:character], chapter_turn_id: chapter1[:chapter_turn])
-    end
-    # 1巻の畑2の種保存
-    session[:chapter1_farm2_seeds].each do |chapter1|
-      post.flower_fields.create(farm_place_id: chapter1[:farm_place], flower_seed_id: chapter1[:seed], chapter_turn_id: chapter1[:chapter_turn])
-    end
-    # 1巻の畑2の設置キャラクター保存
-    session[:chapter1_farm2_characters].each do |chapter1|
-      post.character_fields.create(farm_place_id: chapter1[:farm_place], character_id: chapter1[:character], chapter_turn_id: chapter1[:chapter_turn])
-    end
-    # 1巻の畑3の種保存
-    session[:chapter1_farm3_seeds].each do |chapter1|
-      post.flower_fields.create(farm_place_id: chapter1[:farm_place], flower_seed_id: chapter1[:seed], chapter_turn_id: chapter1[:chapter_turn])
-    end
-    # 1巻の畑3の設置キャラクター保存
-    session[:chapter1_farm3_characters].each do |chapter1|
-      post.character_fields.create(farm_place_id: chapter1[:farm_place], character_id: chapter1[:character], chapter_turn_id: chapter1[:chapter_turn])
-    end
-    # 1巻の畑4の種保存
-    session[:chapter1_farm4_seeds].each do |chapter1|
-      post.flower_fields.create(farm_place_id: chapter1[:farm_place], flower_seed_id: chapter1[:seed], chapter_turn_id: chapter1[:chapter_turn])
-    end
-    # 1巻の畑4の設置キャラクター保存
-    session[:chapter1_farm4_characters].each do |chapter1|
-      post.character_fields.create(farm_place_id: chapter1[:farm_place], character_id: chapter1[:character], chapter_turn_id: chapter1[:chapter_turn])
-    end
-    # 1巻の畑5の種保存
-    session[:chapter1_farm5_seeds].each do |chapter1|
-      post.flower_fields.create(farm_place_id: chapter1[:farm_place], flower_seed_id: chapter1[:seed], chapter_turn_id: chapter1[:chapter_turn])
-    end
-    # 1巻の畑5の設置キャラクター保存
-    session[:chapter1_farm5_characters].each do |chapter1|
-      post.character_fields.create(farm_place_id: chapter1[:farm_place], character_id: chapter1[:character], chapter_turn_id: chapter1[:chapter_turn])
-    end
+      # 1巻の行動の保存
+      chapter1_days = ChapterTurn.where(chapter_id: 1)
+      session[:chapter1_actions].zip(chapter1_days) do |action, chapter1_day|
+        post.training_actions.create(action_id: action, chapter_turn_id: chapter1_day.id)
+      end
+      # 1巻の備考欄保存
+      session[:chapter1_remarks].each do |chapter1|
+        post.training_advices.create(content: chapter1[:remark], chapter_turn_id: chapter1[:chapter_turn])
+      end
+      # 1巻の畑1の種保存
+      session[:chapter1_farm1_seeds].each do |chapter1|
+        post.flower_fields.create(farm_place_id: chapter1[:farm_place], flower_seed_id: chapter1[:seed], chapter_turn_id: chapter1[:chapter_turn])
+      end
+      # 1巻の畑1の設置キャラクター保存
+      session[:chapter1_farm1_characters].each do |chapter1|
+        post.character_fields.create(farm_place_id: chapter1[:farm_place], character_id: chapter1[:character], chapter_turn_id: chapter1[:chapter_turn])
+      end
+      # 1巻の畑2の種保存
+      session[:chapter1_farm2_seeds].each do |chapter1|
+        post.flower_fields.create(farm_place_id: chapter1[:farm_place], flower_seed_id: chapter1[:seed], chapter_turn_id: chapter1[:chapter_turn])
+      end
+      # 1巻の畑2の設置キャラクター保存
+      session[:chapter1_farm2_characters].each do |chapter1|
+        post.character_fields.create(farm_place_id: chapter1[:farm_place], character_id: chapter1[:character], chapter_turn_id: chapter1[:chapter_turn])
+      end
+      # 1巻の畑3の種保存
+      session[:chapter1_farm3_seeds].each do |chapter1|
+        post.flower_fields.create(farm_place_id: chapter1[:farm_place], flower_seed_id: chapter1[:seed], chapter_turn_id: chapter1[:chapter_turn])
+      end
+      # 1巻の畑3の設置キャラクター保存
+      session[:chapter1_farm3_characters].each do |chapter1|
+        post.character_fields.create(farm_place_id: chapter1[:farm_place], character_id: chapter1[:character], chapter_turn_id: chapter1[:chapter_turn])
+      end
+      # 1巻の畑4の種保存
+      session[:chapter1_farm4_seeds].each do |chapter1|
+        post.flower_fields.create(farm_place_id: chapter1[:farm_place], flower_seed_id: chapter1[:seed], chapter_turn_id: chapter1[:chapter_turn])
+      end
+      # 1巻の畑4の設置キャラクター保存
+      session[:chapter1_farm4_characters].each do |chapter1|
+        post.character_fields.create(farm_place_id: chapter1[:farm_place], character_id: chapter1[:character], chapter_turn_id: chapter1[:chapter_turn])
+      end
+      # 1巻の畑5の種保存
+      session[:chapter1_farm5_seeds].each do |chapter1|
+        post.flower_fields.create(farm_place_id: chapter1[:farm_place], flower_seed_id: chapter1[:seed], chapter_turn_id: chapter1[:chapter_turn])
+      end
+      # 1巻の畑5の設置キャラクター保存
+      session[:chapter1_farm5_characters].each do |chapter1|
+        post.character_fields.create(farm_place_id: chapter1[:farm_place], character_id: chapter1[:character], chapter_turn_id: chapter1[:chapter_turn])
+      end
 
-    # 2巻の行動の保存
-    chapter2_days = ChapterTurn.where(chapter_id: 2)
-    session[:chapter2_actions].zip(chapter2_days) do |action, chapter2_day|
-      post.training_actions.create(action_id: action, chapter_turn_id: chapter2_day.id)
-    end
-    # 2巻の備考欄保存
-    session[:chapter2_remarks].each do |chapter2|
-      post.training_advices.create(content: chapter2[:remark], chapter_turn_id: chapter2[:chapter_turn])
-    end
-    # 2巻の畑1の種保存
-    session[:chapter2_farm1_seeds].each do |chapter2|
-      post.flower_fields.create(farm_place_id: chapter2[:farm_place], flower_seed_id: chapter2[:seed], chapter_turn_id: chapter2[:chapter_turn])
-    end
-    # 2巻の畑1の設置キャラクター保存
-    session[:chapter2_farm1_characters].each do |chapter2|
-      post.character_fields.create(farm_place_id: chapter2[:farm_place], character_id: chapter2[:character], chapter_turn_id: chapter2[:chapter_turn])
-    end
-    # 2巻の畑2の種保存
-    session[:chapter2_farm2_seeds].each do |chapter2|
-      post.flower_fields.create(farm_place_id: chapter2[:farm_place], flower_seed_id: chapter2[:seed], chapter_turn_id: chapter2[:chapter_turn])
-    end
-    # 2巻の畑2の設置キャラクター保存
-    session[:chapter2_farm2_characters].each do |chapter2|
-      post.character_fields.create(farm_place_id: chapter2[:farm_place], character_id: chapter2[:character], chapter_turn_id: chapter2[:chapter_turn])
-    end
-    # 2巻の畑3の種保存
-    session[:chapter2_farm3_seeds].each do |chapter2|
-      post.flower_fields.create(farm_place_id: chapter2[:farm_place], flower_seed_id: chapter2[:seed], chapter_turn_id: chapter2[:chapter_turn])
-    end
-    # 2巻の畑3の設置キャラクター保存
-    session[:chapter2_farm3_characters].each do |chapter2|
-      post.character_fields.create(farm_place_id: chapter2[:farm_place], character_id: chapter2[:character], chapter_turn_id: chapter2[:chapter_turn])
-    end
-    # 2巻の畑4の種保存
-    session[:chapter2_farm4_seeds].each do |chapter2|
-      post.flower_fields.create(farm_place_id: chapter2[:farm_place], flower_seed_id: chapter2[:seed], chapter_turn_id: chapter2[:chapter_turn])
-    end
-    # 2巻の畑4の設置キャラクター保存
-    session[:chapter2_farm4_characters].each do |chapter2|
-      post.character_fields.create(farm_place_id: chapter2[:farm_place], character_id: chapter2[:character], chapter_turn_id: chapter2[:chapter_turn])
-    end
-    # 2巻の畑5の種保存
-    session[:chapter2_farm5_seeds].each do |chapter2|
-      post.flower_fields.create(farm_place_id: chapter2[:farm_place], flower_seed_id: chapter2[:seed], chapter_turn_id: chapter2[:chapter_turn])
-    end
-    # 2巻の畑5の設置キャラクター保存
-    session[:chapter2_farm5_characters].each do |chapter2|
-      post.character_fields.create(farm_place_id: chapter2[:farm_place], character_id: chapter2[:character], chapter_turn_id: chapter2[:chapter_turn])
-    end
-    # 2巻の畑6の種保存
-    session[:chapter2_farm6_seeds].each do |chapter2|
-      post.flower_fields.create(farm_place_id: chapter2[:farm_place], flower_seed_id: chapter2[:seed], chapter_turn_id: chapter2[:chapter_turn])
-    end
-    # 2巻の畑6の設置キャラクター保存
-    session[:chapter2_farm6_characters].each do |chapter2|
-      post.character_fields.create(farm_place_id: chapter2[:farm_place], character_id: chapter2[:character], chapter_turn_id: chapter2[:chapter_turn])
-    end
-    # 2巻の畑7の種保存
-    session[:chapter2_farm7_seeds].each do |chapter2|
-      post.flower_fields.create(farm_place_id: chapter2[:farm_place], flower_seed_id: chapter2[:seed], chapter_turn_id: chapter2[:chapter_turn])
-    end
-    # 2巻の畑7の設置キャラクター保存
-    session[:chapter2_farm7_characters].each do |chapter2|
-      post.character_fields.create(farm_place_id: chapter2[:farm_place], character_id: chapter2[:character], chapter_turn_id: chapter2[:chapter_turn])
-    end
-    # 2巻の畑8の種保存
-    session[:chapter2_farm8_seeds].each do |chapter2|
-      post.flower_fields.create(farm_place_id: chapter2[:farm_place], flower_seed_id: chapter2[:seed], chapter_turn_id: chapter2[:chapter_turn])
-    end
-    # 2巻の畑8の設置キャラクター保存
-    session[:chapter2_farm8_characters].each do |chapter2|
-      post.character_fields.create(farm_place_id: chapter2[:farm_place], character_id: chapter2[:character], chapter_turn_id: chapter2[:chapter_turn])
-    end
-    # 2巻の畑9の種保存
-    session[:chapter2_farm9_seeds].each do |chapter2|
-      post.flower_fields.create(farm_place_id: chapter2[:farm_place], flower_seed_id: chapter2[:seed], chapter_turn_id: chapter2[:chapter_turn])
-    end
-    # 2巻の畑9の設置キャラクター保存
-    session[:chapter2_farm9_characters].each do |chapter2|
-      post.character_fields.create(farm_place_id: chapter2[:farm_place], character_id: chapter2[:character], chapter_turn_id: chapter2[:chapter_turn])
-    end
+      # 2巻の行動の保存
+      chapter2_days = ChapterTurn.where(chapter_id: 2)
+      session[:chapter2_actions].zip(chapter2_days) do |action, chapter2_day|
+        post.training_actions.create(action_id: action, chapter_turn_id: chapter2_day.id)
+      end
+      # 2巻の備考欄保存
+      session[:chapter2_remarks].each do |chapter2|
+        post.training_advices.create(content: chapter2[:remark], chapter_turn_id: chapter2[:chapter_turn])
+      end
+      # 2巻の畑1の種保存
+      session[:chapter2_farm1_seeds].each do |chapter2|
+        post.flower_fields.create(farm_place_id: chapter2[:farm_place], flower_seed_id: chapter2[:seed], chapter_turn_id: chapter2[:chapter_turn])
+      end
+      # 2巻の畑1の設置キャラクター保存
+      session[:chapter2_farm1_characters].each do |chapter2|
+        post.character_fields.create(farm_place_id: chapter2[:farm_place], character_id: chapter2[:character], chapter_turn_id: chapter2[:chapter_turn])
+      end
+      # 2巻の畑2の種保存
+      session[:chapter2_farm2_seeds].each do |chapter2|
+        post.flower_fields.create(farm_place_id: chapter2[:farm_place], flower_seed_id: chapter2[:seed], chapter_turn_id: chapter2[:chapter_turn])
+      end
+      # 2巻の畑2の設置キャラクター保存
+      session[:chapter2_farm2_characters].each do |chapter2|
+        post.character_fields.create(farm_place_id: chapter2[:farm_place], character_id: chapter2[:character], chapter_turn_id: chapter2[:chapter_turn])
+      end
+      # 2巻の畑3の種保存
+      session[:chapter2_farm3_seeds].each do |chapter2|
+        post.flower_fields.create(farm_place_id: chapter2[:farm_place], flower_seed_id: chapter2[:seed], chapter_turn_id: chapter2[:chapter_turn])
+      end
+      # 2巻の畑3の設置キャラクター保存
+      session[:chapter2_farm3_characters].each do |chapter2|
+        post.character_fields.create(farm_place_id: chapter2[:farm_place], character_id: chapter2[:character], chapter_turn_id: chapter2[:chapter_turn])
+      end
+      # 2巻の畑4の種保存
+      session[:chapter2_farm4_seeds].each do |chapter2|
+        post.flower_fields.create(farm_place_id: chapter2[:farm_place], flower_seed_id: chapter2[:seed], chapter_turn_id: chapter2[:chapter_turn])
+      end
+      # 2巻の畑4の設置キャラクター保存
+      session[:chapter2_farm4_characters].each do |chapter2|
+        post.character_fields.create(farm_place_id: chapter2[:farm_place], character_id: chapter2[:character], chapter_turn_id: chapter2[:chapter_turn])
+      end
+      # 2巻の畑5の種保存
+      session[:chapter2_farm5_seeds].each do |chapter2|
+        post.flower_fields.create(farm_place_id: chapter2[:farm_place], flower_seed_id: chapter2[:seed], chapter_turn_id: chapter2[:chapter_turn])
+      end
+      # 2巻の畑5の設置キャラクター保存
+      session[:chapter2_farm5_characters].each do |chapter2|
+        post.character_fields.create(farm_place_id: chapter2[:farm_place], character_id: chapter2[:character], chapter_turn_id: chapter2[:chapter_turn])
+      end
+      # 2巻の畑6の種保存
+      session[:chapter2_farm6_seeds].each do |chapter2|
+        post.flower_fields.create(farm_place_id: chapter2[:farm_place], flower_seed_id: chapter2[:seed], chapter_turn_id: chapter2[:chapter_turn])
+      end
+      # 2巻の畑6の設置キャラクター保存
+      session[:chapter2_farm6_characters].each do |chapter2|
+        post.character_fields.create(farm_place_id: chapter2[:farm_place], character_id: chapter2[:character], chapter_turn_id: chapter2[:chapter_turn])
+      end
+      # 2巻の畑7の種保存
+      session[:chapter2_farm7_seeds].each do |chapter2|
+        post.flower_fields.create(farm_place_id: chapter2[:farm_place], flower_seed_id: chapter2[:seed], chapter_turn_id: chapter2[:chapter_turn])
+      end
+      # 2巻の畑7の設置キャラクター保存
+      session[:chapter2_farm7_characters].each do |chapter2|
+        post.character_fields.create(farm_place_id: chapter2[:farm_place], character_id: chapter2[:character], chapter_turn_id: chapter2[:chapter_turn])
+      end
+      # 2巻の畑8の種保存
+      session[:chapter2_farm8_seeds].each do |chapter2|
+        post.flower_fields.create(farm_place_id: chapter2[:farm_place], flower_seed_id: chapter2[:seed], chapter_turn_id: chapter2[:chapter_turn])
+      end
+      # 2巻の畑8の設置キャラクター保存
+      session[:chapter2_farm8_characters].each do |chapter2|
+        post.character_fields.create(farm_place_id: chapter2[:farm_place], character_id: chapter2[:character], chapter_turn_id: chapter2[:chapter_turn])
+      end
+      # 2巻の畑9の種保存
+      session[:chapter2_farm9_seeds].each do |chapter2|
+        post.flower_fields.create(farm_place_id: chapter2[:farm_place], flower_seed_id: chapter2[:seed], chapter_turn_id: chapter2[:chapter_turn])
+      end
+      # 2巻の畑9の設置キャラクター保存
+      session[:chapter2_farm9_characters].each do |chapter2|
+        post.character_fields.create(farm_place_id: chapter2[:farm_place], character_id: chapter2[:character], chapter_turn_id: chapter2[:chapter_turn])
+      end
 
-    # 3巻の行動の保存
-    chapter3_days = ChapterTurn.where(chapter_id: 3)
-    session[:chapter3_actions].zip(chapter3_days) do |action, chapter3_day|
-      post.training_actions.create(action_id: action, chapter_turn_id: chapter3_day.id)
-    end
-    # 3巻の備考欄保存
-    session[:chapter3_remarks].each do |chapter3|
-      post.training_advices.create(content: chapter3[:remark], chapter_turn_id: chapter3[:chapter_turn])
-    end
-    # 3巻の畑1の種保存
-    session[:chapter3_farm1_seeds].each do |chapter3|
-      post.flower_fields.create(farm_place_id: chapter3[:farm_place], flower_seed_id: chapter3[:seed], chapter_turn_id: chapter3[:chapter_turn])
-    end
-    # 3巻の畑1の設置キャラクター保存
-    session[:chapter3_farm1_characters].each do |chapter3|
-      post.character_fields.create(farm_place_id: chapter3[:farm_place], character_id: chapter3[:character], chapter_turn_id: chapter3[:chapter_turn])
-    end
-    # 3巻の畑2の種保存
-    session[:chapter3_farm2_seeds].each do |chapter3|
-      post.flower_fields.create(farm_place_id: chapter3[:farm_place], flower_seed_id: chapter3[:seed], chapter_turn_id: chapter3[:chapter_turn])
-    end
-    # 3巻の畑2の設置キャラクター保存
-    session[:chapter3_farm2_characters].each do |chapter3|
-      post.character_fields.create(farm_place_id: chapter3[:farm_place], character_id: chapter3[:character], chapter_turn_id: chapter3[:chapter_turn])
-    end
-    # 3巻の畑3の種保存
-    session[:chapter3_farm3_seeds].each do |chapter3|
-      post.flower_fields.create(farm_place_id: chapter3[:farm_place], flower_seed_id: chapter3[:seed], chapter_turn_id: chapter3[:chapter_turn])
-    end
-    # 3巻の畑3の設置キャラクター保存
-    session[:chapter3_farm3_characters].each do |chapter3|
-      post.character_fields.create(farm_place_id: chapter3[:farm_place], character_id: chapter3[:character], chapter_turn_id: chapter3[:chapter_turn])
-    end
-    # 3巻の畑4の種保存
-    session[:chapter3_farm4_seeds].each do |chapter3|
-      post.flower_fields.create(farm_place_id: chapter3[:farm_place], flower_seed_id: chapter3[:seed], chapter_turn_id: chapter3[:chapter_turn])
-    end
-    # 3巻の畑4の設置キャラクター保存
-    session[:chapter3_farm4_characters].each do |chapter3|
-      post.character_fields.create(farm_place_id: chapter3[:farm_place], character_id: chapter3[:character], chapter_turn_id: chapter3[:chapter_turn])
-    end
-    # 3巻の畑5の種保存
-    session[:chapter3_farm5_seeds].each do |chapter3|
-      post.flower_fields.create(farm_place_id: chapter3[:farm_place], flower_seed_id: chapter3[:seed], chapter_turn_id: chapter3[:chapter_turn])
-    end
-    # 3巻の畑5の設置キャラクター保存
-    session[:chapter3_farm5_characters].each do |chapter3|
-      post.character_fields.create(farm_place_id: chapter3[:farm_place], character_id: chapter3[:character], chapter_turn_id: chapter3[:chapter_turn])
-    end
-    # 3巻の畑6の種保存
-    session[:chapter3_farm6_seeds].each do |chapter3|
-      post.flower_fields.create(farm_place_id: chapter3[:farm_place], flower_seed_id: chapter3[:seed], chapter_turn_id: chapter3[:chapter_turn])
-    end
-    # 3巻の畑6の設置キャラクター保存
-    session[:chapter3_farm6_characters].each do |chapter3|
-      post.character_fields.create(farm_place_id: chapter3[:farm_place], character_id: chapter3[:character], chapter_turn_id: chapter3[:chapter_turn])
-    end
-    # 3巻の畑7の種保存
-    session[:chapter3_farm7_seeds].each do |chapter3|
-      post.flower_fields.create(farm_place_id: chapter3[:farm_place], flower_seed_id: chapter3[:seed], chapter_turn_id: chapter3[:chapter_turn])
-    end
-    # 3巻の畑7の設置キャラクター保存
-    session[:chapter3_farm7_characters].each do |chapter3|
-      post.character_fields.create(farm_place_id: chapter3[:farm_place], character_id: chapter3[:character], chapter_turn_id: chapter3[:chapter_turn])
-    end
-    # 3巻の畑8の種保存
-    session[:chapter3_farm8_seeds].each do |chapter3|
-      post.flower_fields.create(farm_place_id: chapter3[:farm_place], flower_seed_id: chapter3[:seed], chapter_turn_id: chapter3[:chapter_turn])
-    end
-    # 3巻の畑8の設置キャラクター保存
-    session[:chapter3_farm8_characters].each do |chapter3|
-      post.character_fields.create(farm_place_id: chapter3[:farm_place], character_id: chapter3[:character], chapter_turn_id: chapter3[:chapter_turn])
-    end
-    # 3巻の畑9の種保存
-    session[:chapter3_farm9_seeds].each do |chapter3|
-      post.flower_fields.create(farm_place_id: chapter3[:farm_place], flower_seed_id: chapter3[:seed], chapter_turn_id: chapter3[:chapter_turn])
-    end
-    # 3巻の畑9の設置キャラクター保存
-    session[:chapter3_farm9_characters].each do |chapter3|
-      post.character_fields.create(farm_place_id: chapter3[:farm_place], character_id: chapter3[:character], chapter_turn_id: chapter3[:chapter_turn])
-    end
+      # 3巻の行動の保存
+      chapter3_days = ChapterTurn.where(chapter_id: 3)
+      session[:chapter3_actions].zip(chapter3_days) do |action, chapter3_day|
+        post.training_actions.create(action_id: action, chapter_turn_id: chapter3_day.id)
+      end
+      # 3巻の備考欄保存
+      session[:chapter3_remarks].each do |chapter3|
+        post.training_advices.create(content: chapter3[:remark], chapter_turn_id: chapter3[:chapter_turn])
+      end
+      # 3巻の畑1の種保存
+      session[:chapter3_farm1_seeds].each do |chapter3|
+        post.flower_fields.create(farm_place_id: chapter3[:farm_place], flower_seed_id: chapter3[:seed], chapter_turn_id: chapter3[:chapter_turn])
+      end
+      # 3巻の畑1の設置キャラクター保存
+      session[:chapter3_farm1_characters].each do |chapter3|
+        post.character_fields.create(farm_place_id: chapter3[:farm_place], character_id: chapter3[:character], chapter_turn_id: chapter3[:chapter_turn])
+      end
+      # 3巻の畑2の種保存
+      session[:chapter3_farm2_seeds].each do |chapter3|
+        post.flower_fields.create(farm_place_id: chapter3[:farm_place], flower_seed_id: chapter3[:seed], chapter_turn_id: chapter3[:chapter_turn])
+      end
+      # 3巻の畑2の設置キャラクター保存
+      session[:chapter3_farm2_characters].each do |chapter3|
+        post.character_fields.create(farm_place_id: chapter3[:farm_place], character_id: chapter3[:character], chapter_turn_id: chapter3[:chapter_turn])
+      end
+      # 3巻の畑3の種保存
+      session[:chapter3_farm3_seeds].each do |chapter3|
+        post.flower_fields.create(farm_place_id: chapter3[:farm_place], flower_seed_id: chapter3[:seed], chapter_turn_id: chapter3[:chapter_turn])
+      end
+      # 3巻の畑3の設置キャラクター保存
+      session[:chapter3_farm3_characters].each do |chapter3|
+        post.character_fields.create(farm_place_id: chapter3[:farm_place], character_id: chapter3[:character], chapter_turn_id: chapter3[:chapter_turn])
+      end
+      # 3巻の畑4の種保存
+      session[:chapter3_farm4_seeds].each do |chapter3|
+        post.flower_fields.create(farm_place_id: chapter3[:farm_place], flower_seed_id: chapter3[:seed], chapter_turn_id: chapter3[:chapter_turn])
+      end
+      # 3巻の畑4の設置キャラクター保存
+      session[:chapter3_farm4_characters].each do |chapter3|
+        post.character_fields.create(farm_place_id: chapter3[:farm_place], character_id: chapter3[:character], chapter_turn_id: chapter3[:chapter_turn])
+      end
+      # 3巻の畑5の種保存
+      session[:chapter3_farm5_seeds].each do |chapter3|
+        post.flower_fields.create(farm_place_id: chapter3[:farm_place], flower_seed_id: chapter3[:seed], chapter_turn_id: chapter3[:chapter_turn])
+      end
+      # 3巻の畑5の設置キャラクター保存
+      session[:chapter3_farm5_characters].each do |chapter3|
+        post.character_fields.create(farm_place_id: chapter3[:farm_place], character_id: chapter3[:character], chapter_turn_id: chapter3[:chapter_turn])
+      end
+      # 3巻の畑6の種保存
+      session[:chapter3_farm6_seeds].each do |chapter3|
+        post.flower_fields.create(farm_place_id: chapter3[:farm_place], flower_seed_id: chapter3[:seed], chapter_turn_id: chapter3[:chapter_turn])
+      end
+      # 3巻の畑6の設置キャラクター保存
+      session[:chapter3_farm6_characters].each do |chapter3|
+        post.character_fields.create(farm_place_id: chapter3[:farm_place], character_id: chapter3[:character], chapter_turn_id: chapter3[:chapter_turn])
+      end
+      # 3巻の畑7の種保存
+      session[:chapter3_farm7_seeds].each do |chapter3|
+        post.flower_fields.create(farm_place_id: chapter3[:farm_place], flower_seed_id: chapter3[:seed], chapter_turn_id: chapter3[:chapter_turn])
+      end
+      # 3巻の畑7の設置キャラクター保存
+      session[:chapter3_farm7_characters].each do |chapter3|
+        post.character_fields.create(farm_place_id: chapter3[:farm_place], character_id: chapter3[:character], chapter_turn_id: chapter3[:chapter_turn])
+      end
+      # 3巻の畑8の種保存
+      session[:chapter3_farm8_seeds].each do |chapter3|
+        post.flower_fields.create(farm_place_id: chapter3[:farm_place], flower_seed_id: chapter3[:seed], chapter_turn_id: chapter3[:chapter_turn])
+      end
+      # 3巻の畑8の設置キャラクター保存
+      session[:chapter3_farm8_characters].each do |chapter3|
+        post.character_fields.create(farm_place_id: chapter3[:farm_place], character_id: chapter3[:character], chapter_turn_id: chapter3[:chapter_turn])
+      end
+      # 3巻の畑9の種保存
+      session[:chapter3_farm9_seeds].each do |chapter3|
+        post.flower_fields.create(farm_place_id: chapter3[:farm_place], flower_seed_id: chapter3[:seed], chapter_turn_id: chapter3[:chapter_turn])
+      end
+      # 3巻の畑9の設置キャラクター保存
+      session[:chapter3_farm9_characters].each do |chapter3|
+        post.character_fields.create(farm_place_id: chapter3[:farm_place], character_id: chapter3[:character], chapter_turn_id: chapter3[:chapter_turn])
+      end
 
-    # 4巻の行動の保存
-    chapter4_days = ChapterTurn.where(chapter_id: 4)
-    session[:chapter4_actions].zip(chapter4_days) do |action, chapter4_day|
-      post.training_actions.create(action_id: action, chapter_turn_id: chapter4_day.id)
-    end
-    # 4巻の備考欄保存
-    session[:chapter4_remarks].each do |chapter4|
-      post.training_advices.create(content: chapter4[:remark], chapter_turn_id: chapter4[:chapter_turn])
-    end
-    # 4巻の畑1の種保存
-    session[:chapter4_farm1_seeds].each do |chapter4|
-      post.flower_fields.create(farm_place_id: chapter4[:farm_place], flower_seed_id: chapter4[:seed], chapter_turn_id: chapter4[:chapter_turn])
-    end
-    # 4巻の畑1の設置キャラクター保存
-    session[:chapter4_farm1_characters].each do |chapter4|
-      post.character_fields.create(farm_place_id: chapter4[:farm_place], character_id: chapter4[:character], chapter_turn_id: chapter4[:chapter_turn])
-    end
-    # 4巻の畑2の種保存
-    session[:chapter4_farm2_seeds].each do |chapter4|
-      post.flower_fields.create(farm_place_id: chapter4[:farm_place], flower_seed_id: chapter4[:seed], chapter_turn_id: chapter4[:chapter_turn])
-    end
-    # 4巻の畑2の設置キャラクター保存
-    session[:chapter4_farm2_characters].each do |chapter4|
-      post.character_fields.create(farm_place_id: chapter4[:farm_place], character_id: chapter4[:character], chapter_turn_id: chapter4[:chapter_turn])
-    end
-    # 4巻の畑3の種保存
-    session[:chapter4_farm3_seeds].each do |chapter4|
-      post.flower_fields.create(farm_place_id: chapter4[:farm_place], flower_seed_id: chapter4[:seed], chapter_turn_id: chapter4[:chapter_turn])
-    end
-    # 4巻の畑3の設置キャラクター保存
-    session[:chapter4_farm3_characters].each do |chapter4|
-      post.character_fields.create(farm_place_id: chapter4[:farm_place], character_id: chapter4[:character], chapter_turn_id: chapter4[:chapter_turn])
-    end
-    # 4巻の畑4の種保存
-    session[:chapter4_farm4_seeds].each do |chapter4|
-      post.flower_fields.create(farm_place_id: chapter4[:farm_place], flower_seed_id: chapter4[:seed], chapter_turn_id: chapter4[:chapter_turn])
-    end
-    # 4巻の畑4の設置キャラクター保存
-    session[:chapter4_farm4_characters].each do |chapter4|
-      post.character_fields.create(farm_place_id: chapter4[:farm_place], character_id: chapter4[:character], chapter_turn_id: chapter4[:chapter_turn])
-    end
-    # 4巻の畑5の種保存
-    session[:chapter4_farm5_seeds].each do |chapter4|
-      post.flower_fields.create(farm_place_id: chapter4[:farm_place], flower_seed_id: chapter4[:seed], chapter_turn_id: chapter4[:chapter_turn])
-    end
-    # 4巻の畑5の設置キャラクター保存
-    session[:chapter4_farm5_characters].each do |chapter4|
-      post.character_fields.create(farm_place_id: chapter4[:farm_place], character_id: chapter4[:character], chapter_turn_id: chapter4[:chapter_turn])
-    end
-    # 4巻の畑6の種保存
-    session[:chapter4_farm6_seeds].each do |chapter4|
-      post.flower_fields.create(farm_place_id: chapter4[:farm_place], flower_seed_id: chapter4[:seed], chapter_turn_id: chapter4[:chapter_turn])
-    end
-    # 4巻の畑6の設置キャラクター保存
-    session[:chapter4_farm6_characters].each do |chapter4|
-      post.character_fields.create(farm_place_id: chapter4[:farm_place], character_id: chapter4[:character], chapter_turn_id: chapter4[:chapter_turn])
-    end
-    # 4巻の畑7の種保存
-    session[:chapter4_farm7_seeds].each do |chapter4|
-      post.flower_fields.create(farm_place_id: chapter4[:farm_place], flower_seed_id: chapter4[:seed], chapter_turn_id: chapter4[:chapter_turn])
-    end
-    # 4巻の畑7の設置キャラクター保存
-    session[:chapter4_farm7_characters].each do |chapter4|
-      post.character_fields.create(farm_place_id: chapter4[:farm_place], character_id: chapter4[:character], chapter_turn_id: chapter4[:chapter_turn])
-    end
-    # 4巻の畑8の種保存
-    session[:chapter4_farm8_seeds].each do |chapter4|
-      post.flower_fields.create(farm_place_id: chapter4[:farm_place], flower_seed_id: chapter4[:seed], chapter_turn_id: chapter4[:chapter_turn])
-    end
-    # 4巻の畑8の設置キャラクター保存
-    session[:chapter4_farm8_characters].each do |chapter4|
-      post.character_fields.create(farm_place_id: chapter4[:farm_place], character_id: chapter4[:character], chapter_turn_id: chapter4[:chapter_turn])
-    end
-    # 4巻の畑9の種保存
-    session[:chapter4_farm9_seeds].each do |chapter4|
-      post.flower_fields.create(farm_place_id: chapter4[:farm_place], flower_seed_id: chapter4[:seed], chapter_turn_id: chapter4[:chapter_turn])
-    end
-    # 4巻の畑9の設置キャラクター保存
-    session[:chapter4_farm9_characters].each do |chapter4|
-      post.character_fields.create(farm_place_id: chapter4[:farm_place], character_id: chapter4[:character], chapter_turn_id: chapter4[:chapter_turn])
+      # 4巻の行動の保存
+      chapter4_days = ChapterTurn.where(chapter_id: 4)
+      session[:chapter4_actions].zip(chapter4_days) do |action, chapter4_day|
+        post.training_actions.create(action_id: action, chapter_turn_id: chapter4_day.id)
+      end
+      # 4巻の備考欄保存
+      session[:chapter4_remarks].each do |chapter4|
+        post.training_advices.create(content: chapter4[:remark], chapter_turn_id: chapter4[:chapter_turn])
+      end
+      # 4巻の畑1の種保存
+      session[:chapter4_farm1_seeds].each do |chapter4|
+        post.flower_fields.create(farm_place_id: chapter4[:farm_place], flower_seed_id: chapter4[:seed], chapter_turn_id: chapter4[:chapter_turn])
+      end
+      # 4巻の畑1の設置キャラクター保存
+      session[:chapter4_farm1_characters].each do |chapter4|
+        post.character_fields.create(farm_place_id: chapter4[:farm_place], character_id: chapter4[:character], chapter_turn_id: chapter4[:chapter_turn])
+      end
+      # 4巻の畑2の種保存
+      session[:chapter4_farm2_seeds].each do |chapter4|
+        post.flower_fields.create(farm_place_id: chapter4[:farm_place], flower_seed_id: chapter4[:seed], chapter_turn_id: chapter4[:chapter_turn])
+      end
+      # 4巻の畑2の設置キャラクター保存
+      session[:chapter4_farm2_characters].each do |chapter4|
+        post.character_fields.create(farm_place_id: chapter4[:farm_place], character_id: chapter4[:character], chapter_turn_id: chapter4[:chapter_turn])
+      end
+      # 4巻の畑3の種保存
+      session[:chapter4_farm3_seeds].each do |chapter4|
+        post.flower_fields.create(farm_place_id: chapter4[:farm_place], flower_seed_id: chapter4[:seed], chapter_turn_id: chapter4[:chapter_turn])
+      end
+      # 4巻の畑3の設置キャラクター保存
+      session[:chapter4_farm3_characters].each do |chapter4|
+        post.character_fields.create(farm_place_id: chapter4[:farm_place], character_id: chapter4[:character], chapter_turn_id: chapter4[:chapter_turn])
+      end
+      # 4巻の畑4の種保存
+      session[:chapter4_farm4_seeds].each do |chapter4|
+        post.flower_fields.create(farm_place_id: chapter4[:farm_place], flower_seed_id: chapter4[:seed], chapter_turn_id: chapter4[:chapter_turn])
+      end
+      # 4巻の畑4の設置キャラクター保存
+      session[:chapter4_farm4_characters].each do |chapter4|
+        post.character_fields.create(farm_place_id: chapter4[:farm_place], character_id: chapter4[:character], chapter_turn_id: chapter4[:chapter_turn])
+      end
+      # 4巻の畑5の種保存
+      session[:chapter4_farm5_seeds].each do |chapter4|
+        post.flower_fields.create(farm_place_id: chapter4[:farm_place], flower_seed_id: chapter4[:seed], chapter_turn_id: chapter4[:chapter_turn])
+      end
+      # 4巻の畑5の設置キャラクター保存
+      session[:chapter4_farm5_characters].each do |chapter4|
+        post.character_fields.create(farm_place_id: chapter4[:farm_place], character_id: chapter4[:character], chapter_turn_id: chapter4[:chapter_turn])
+      end
+      # 4巻の畑6の種保存
+      session[:chapter4_farm6_seeds].each do |chapter4|
+        post.flower_fields.create(farm_place_id: chapter4[:farm_place], flower_seed_id: chapter4[:seed], chapter_turn_id: chapter4[:chapter_turn])
+      end
+      # 4巻の畑6の設置キャラクター保存
+      session[:chapter4_farm6_characters].each do |chapter4|
+        post.character_fields.create(farm_place_id: chapter4[:farm_place], character_id: chapter4[:character], chapter_turn_id: chapter4[:chapter_turn])
+      end
+      # 4巻の畑7の種保存
+      session[:chapter4_farm7_seeds].each do |chapter4|
+        post.flower_fields.create(farm_place_id: chapter4[:farm_place], flower_seed_id: chapter4[:seed], chapter_turn_id: chapter4[:chapter_turn])
+      end
+      # 4巻の畑7の設置キャラクター保存
+      session[:chapter4_farm7_characters].each do |chapter4|
+        post.character_fields.create(farm_place_id: chapter4[:farm_place], character_id: chapter4[:character], chapter_turn_id: chapter4[:chapter_turn])
+      end
+      # 4巻の畑8の種保存
+      session[:chapter4_farm8_seeds].each do |chapter4|
+        post.flower_fields.create(farm_place_id: chapter4[:farm_place], flower_seed_id: chapter4[:seed], chapter_turn_id: chapter4[:chapter_turn])
+      end
+      # 4巻の畑8の設置キャラクター保存
+      session[:chapter4_farm8_characters].each do |chapter4|
+        post.character_fields.create(farm_place_id: chapter4[:farm_place], character_id: chapter4[:character], chapter_turn_id: chapter4[:chapter_turn])
+      end
+      # 4巻の畑9の種保存
+      session[:chapter4_farm9_seeds].each do |chapter4|
+        post.flower_fields.create(farm_place_id: chapter4[:farm_place], flower_seed_id: chapter4[:seed], chapter_turn_id: chapter4[:chapter_turn])
+      end
+      # 4巻の畑9の設置キャラクター保存
+      session[:chapter4_farm9_characters].each do |chapter4|
+        post.character_fields.create(farm_place_id: chapter4[:farm_place], character_id: chapter4[:character], chapter_turn_id: chapter4[:chapter_turn])
+      end
     end
   end
 
