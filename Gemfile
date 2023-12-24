@@ -98,3 +98,5 @@ gem "sorcery"
 gem "rails-i18n"
 # Redis利用のため
 gem "redis-actionpack"
+# チャート作成時にRailsの変数をJSに渡すため
+gem "gon"

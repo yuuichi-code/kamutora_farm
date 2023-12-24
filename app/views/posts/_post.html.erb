@@ -2,16 +2,16 @@
   <%# レーダーチャート表示用(左側) %>
   <div class="border-2 border-black  w-1/2">
     <div class="flex justify-center">
-      レーダーチャート
+      <%= post.main_character.name %>
     </div>
-    <div class="flex justify-center">
-      グラフ
+    <div>
+      <canvas id="displayChart<%= post.id %>"></canvas>
     </div>
   </div>
   <%# タイトルと修行仲間表示用(右側) %>
   <div class="w-1/2">
     <div class="title border-2 border-black flex justify-center">
-      <%= post.title %>
+      <%= link_to post.title, post_path(post) %>
     </div>
     <div>
       <table class="border-collapse border-2 border-black">
@@ -28,3 +28,40 @@
     </div>
   </div>
 </div>
+<script>
+  const ctx<%= post.id %> = document.getElementById('displayChart<%= post.id %>');
+  const titles<%= post.id %> = ['hp', 'crt', 'crd', 'hit', 'avd', 'spd', 'def', 'atk'];
+  const character_status<%= post.id %> = <%= post.training_character.chart_status %>;
+  function updateChart<%= post.id %>() {
+    chart<%= post.id %>.update();
+  }
+
+  const chart<%= post.id %> = new Chart(ctx<%= post.id %>, {
+    type: 'radar',
+    data: {
+      labels: titles<%= post.id %>,
+      datasets: [{
+        label: '# of Votes',
+        data: character_status<%= post.id %>,
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        r: {
+          beginAtZero: true,
+          max: 7500,
+          min: 0,
+          ticks: {
+            display: false
+          }
+        }
+      },
+      plugins: {
+        legend: {
+          display: false
+        }
+      }
+    }
+  });
+</script>

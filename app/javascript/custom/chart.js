@@ -25,6 +25,11 @@ const chart = new Chart(ctx, {
           display: false
         }
       }
+    },
+    plugins: {
+      legend: {
+        display: false
+      }
     }
   }
 });
@@ -40,13 +45,13 @@ const avd_js = document.getElementById('avd_js');
 
 const status_average = {
   hp_magnification : 0.5,
-  crt_magnification : 7.5,
-  crd_magnification : 7.5,
-  hit_magnification : 60,
+  crt_magnification : 75,
+  crd_magnification : 75,
+  hit_magnification : 75,
   avd_magnification : 75,
-  spd_magnification : 50,
-  def_magnification : 75,
-  atk_magnification : 75
+  spd_magnification : 60,
+  def_magnification : 7.5,
+  atk_magnification : 7.5
 };
 
 const status_limit = 7500;

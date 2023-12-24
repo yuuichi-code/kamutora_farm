@@ -5,6 +5,7 @@ class Post < ApplicationRecord
   has_many :flower_fields
   has_many :character_fields
   has_one :training_character
+  has_one :main_character, through: :training_character, source: :character
   has_many :training_actions
   has_many :training_advices
 

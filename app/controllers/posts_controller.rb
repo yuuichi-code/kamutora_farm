@@ -1,9 +1,11 @@
 class PostsController < ApplicationController
-  skip_before_action :require_login, only: %i[index]
+  skip_before_action :require_login, only: %i[index show]
 
   def index
-    @posts = Post.includes(support_characters: :character).all
+    @posts = Post.includes(:training_character, support_characters: :character).all
   end
+
+  def show; end
 
   def create; end
 
