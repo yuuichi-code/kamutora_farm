@@ -2829,7 +2829,16 @@ class PostsController < ApplicationController
   end
 
   def step6
-    @training_character = TrainingCharacter.new
+    @training_character = TrainingCharacter.new(
+      hp: 0,
+      atk: 0,
+      def: 0,
+      spd: 0,
+      crt: 0,
+      crd: 0,
+      hit: 0,
+      avd: 0
+    )
   end
 
   def create_step6
@@ -2838,7 +2847,8 @@ class PostsController < ApplicationController
     training_character_params_with_character_id = training_character_params.merge(character_id: session[:training_character])
     #@training_character = post.create_training_character(training_character_params_with_character_id)
     @training_character = post.build_training_character(training_character_params_with_character_id)
-    if post.save
+    if @training_character.valid?
+      post.save
       @training_character.save
       # 修行仲間の保存
       session[:support_characters].each do |support_character_id|
@@ -3140,6 +3150,10 @@ class PostsController < ApplicationController
       session[:chapter4_farm9_characters].each do |chapter4|
         post.character_fields.create(farm_place_id: chapter4[:farm_place], character_id: chapter4[:character], chapter_turn_id: chapter4[:chapter_turn])
       end
+      redirect_to root_path, notice: t('.success')
+    else
+      flash.now[:alert] = t('defaults.reenter')
+      render :step6, status: :unprocessable_entity
     end
   end
 
