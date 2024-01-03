@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_26_144506) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_08_114854) do
   create_table "actions", force: :cascade do |t|
     t.string "content", null: false
     t.datetime "created_at", null: false
@@ -35,6 +35,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_26_144506) do
     t.index ["chapter_number"], name: "index_chapters_on_chapter_number", unique: true
   end
 
+  create_table "character_fields", force: :cascade do |t|
+    t.integer "farm_place_id", null: false
+    t.integer "character_id", null: false
+    t.integer "chapter_turn_id", null: false
+    t.integer "post_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chapter_turn_id"], name: "index_character_fields_on_chapter_turn_id"
+    t.index ["character_id"], name: "index_character_fields_on_character_id"
+    t.index ["farm_place_id", "chapter_turn_id", "post_id"], name: "index_unique_on_farm_place_and_chapter_and_post_character_fields", unique: true
+    t.index ["farm_place_id"], name: "index_character_fields_on_farm_place_id"
+    t.index ["post_id"], name: "index_character_fields_on_post_id"
+  end
+
   create_table "characters", force: :cascade do |t|
     t.string "name", null: false
     t.integer "unit_element", null: false
@@ -49,6 +63,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_26_144506) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["farm_number"], name: "index_farm_places_on_farm_number", unique: true
+  end
+
+  create_table "flower_fields", force: :cascade do |t|
+    t.integer "farm_place_id", null: false
+    t.integer "flower_seed_id", null: false
+    t.integer "chapter_turn_id", null: false
+    t.integer "post_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chapter_turn_id"], name: "index_flower_fields_on_chapter_turn_id"
+    t.index ["farm_place_id", "chapter_turn_id", "post_id"], name: "index_unique_on_farm_place_and_chapter_and_post_flower_fields", unique: true
+    t.index ["farm_place_id"], name: "index_flower_fields_on_farm_place_id"
+    t.index ["flower_seed_id"], name: "index_flower_fields_on_flower_seed_id"
+    t.index ["post_id"], name: "index_flower_fields_on_post_id"
   end
 
   create_table "flower_seeds", force: :cascade do |t|
@@ -76,6 +104,48 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_26_144506) do
     t.index ["post_id"], name: "index_support_characters_on_post_id"
   end
 
+  create_table "training_actions", force: :cascade do |t|
+    t.integer "action_id", null: false
+    t.integer "chapter_turn_id", null: false
+    t.integer "post_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["action_id"], name: "index_training_actions_on_action_id"
+    t.index ["chapter_turn_id", "post_id"], name: "index_training_actions_on_chapter_turn_id_and_post_id", unique: true
+    t.index ["chapter_turn_id"], name: "index_training_actions_on_chapter_turn_id"
+    t.index ["post_id"], name: "index_training_actions_on_post_id"
+  end
+
+  create_table "training_advices", force: :cascade do |t|
+    t.string "content", null: false
+    t.integer "chapter_turn_id", null: false
+    t.integer "post_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chapter_turn_id", "post_id"], name: "index_training_advices_on_chapter_turn_id_and_post_id", unique: true
+    t.index ["chapter_turn_id"], name: "index_training_advices_on_chapter_turn_id"
+    t.index ["post_id"], name: "index_training_advices_on_post_id"
+  end
+
+  create_table "training_characters", force: :cascade do |t|
+    t.integer "hp"
+    t.integer "atk"
+    t.integer "def"
+    t.integer "spd"
+    t.integer "crt"
+    t.integer "crd"
+    t.integer "hit"
+    t.integer "avd"
+    t.integer "max_exp"
+    t.integer "character_id", null: false
+    t.integer "post_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index "\"chapter_id\", \"post_id\"", name: "index_training_characters_on_chapter_id_and_post_id", unique: true
+    t.index ["character_id"], name: "index_training_characters_on_character_id"
+    t.index ["post_id"], name: "index_training_characters_on_post_id"
+  end
+
   create_table "turns", force: :cascade do |t|
     t.integer "turn_number", null: false
     t.datetime "created_at", null: false
@@ -95,7 +165,22 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_26_144506) do
 
   add_foreign_key "chapter_turns", "chapters"
   add_foreign_key "chapter_turns", "turns"
+  add_foreign_key "character_fields", "chapter_turns"
+  add_foreign_key "character_fields", "characters"
+  add_foreign_key "character_fields", "farm_places"
+  add_foreign_key "character_fields", "posts"
+  add_foreign_key "flower_fields", "chapter_turns"
+  add_foreign_key "flower_fields", "farm_places"
+  add_foreign_key "flower_fields", "flower_seeds"
+  add_foreign_key "flower_fields", "posts"
   add_foreign_key "posts", "users"
   add_foreign_key "support_characters", "characters"
   add_foreign_key "support_characters", "posts"
+  add_foreign_key "training_actions", "actions"
+  add_foreign_key "training_actions", "chapter_turns"
+  add_foreign_key "training_actions", "posts"
+  add_foreign_key "training_advices", "chapter_turns"
+  add_foreign_key "training_advices", "posts"
+  add_foreign_key "training_characters", "characters"
+  add_foreign_key "training_characters", "posts"
 end

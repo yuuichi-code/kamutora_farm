@@ -55,3 +55,5 @@ ja:
       to_fourth_chapter: '4の巻の内容を入力してください'
     create_step5:
       input_status: '完成キャラクターの能力値を入力してください'
+    create_step6:
+      success: '投稿しました'
