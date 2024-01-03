@@ -38,5 +38,4 @@
 !/app/assets/builds/.keep
 
 .env.production
-.env.development
 dump.rdb
